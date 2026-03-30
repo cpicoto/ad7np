@@ -39,12 +39,14 @@
 </head>
 <body>
     <h1>Privacy Policy for WW7ATS</h1>
-    <p class="last-updated">Last updated: March 25, 2026</p>
+    <p class="last-updated">Last updated: March 29, 2026</p>
 
     <div class="section">
         <h2>Introduction</h2>
         <p>
-            This privacy policy describes how WW7ATS ("the App") handles your information. 
+            This privacy policy describes how WW7ATS ("the App") handles your information.
+            WW7ATS is an amateur (ham) radio Amateur Television (ATV) streaming application
+            available on iPhone, iPad, Mac, and Apple TV.
             We are committed to protecting your privacy and being transparent about our practices.
         </p>
     </div>
@@ -55,13 +57,13 @@
             The App requests access to your device's camera for the following purposes:
         </p>
         <ul>
-            <li>To capture photos and videos as part of the app's core functionality</li>
+            <li>To capture video for live RTMP streaming to your configured ATV repeater server</li>
             <li>To enable real-time camera preview features</li>
+            <li>On Apple TV, video is captured via iPhone Continuity Camera over your local network</li>
         </ul>
         <p>
-            <strong>Important:</strong> All camera data is processed locally on your device. 
-            We do not upload, transmit, or store any photos or videos captured through the app 
-            on external servers without your explicit consent.
+            <strong>Important:</strong> Camera data is streamed directly to the RTMP server URL you configure
+            in the app settings. No video data is sent anywhere else or stored by the developer.
         </p>
     </div>
 
@@ -71,21 +73,25 @@
             The App requests access to your device's microphone for the following purposes:
         </p>
         <ul>
-            <li>To record audio when capturing videos</li>
-            <li>To enable voice-related features within the app</li>
+            <li>To capture audio for live RTMP streaming to your configured server</li>
+            <li>On Apple TV, audio is captured via iPhone Continuity Camera</li>
         </ul>
         <p>
-            <strong>Important:</strong> All audio data is processed locally on your device. 
-            We do not upload, transmit, or store any audio recordings on external servers 
-            without your explicit consent.
+            <strong>Important:</strong> Audio data is streamed directly to the RTMP server URL you configure.
+            No audio data is sent anywhere else or stored by the developer.
         </p>
     </div>
 
     <div class="section">
         <h2>Data Collection and Storage</h2>
         <p>
-            WW7ATS does not collect, store, or transmit any personal information to external servers. 
-            All media captured through the app remains on your device and is under your control.
+            WW7ATS does not collect, store, or transmit any personal data to external servers operated by the developer.
+            The app does not include any analytics, tracking, or advertising frameworks.
+        </p>
+        <p>
+            The app stores your settings (callsign, server URL, stream quality preferences) locally on your device.
+            Your RTMP stream key is stored securely in the device Keychain (iOS/tvOS/macOS).
+            Slideshow images are loaded temporarily into memory and are not saved or transmitted beyond the RTMP stream.
         </p>
     </div>
 
@@ -93,6 +99,16 @@
         <h2>Third-Party Services</h2>
         <p>
             The App does not use any third-party services that collect user data.
+            The only network communication is the RTMP stream sent to the server you configure,
+            HLS playback from the URL you specify, and (on Apple TV) the local network connection
+            to your iPhone for Continuity Camera.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>Children's Privacy</h2>
+        <p>
+            This app is not directed at children under 13. Use of amateur radio requires an FCC license.
         </p>
     </div>
 
@@ -103,7 +119,6 @@
         </p>
         <ul>
             <li>You can revoke camera and microphone permissions at any time through your device settings</li>
-            <li>You can delete any media captured through the App at any time</li>
             <li>The App will function within the limitations of the permissions you grant</li>
         </ul>
     </div>
@@ -111,7 +126,7 @@
     <div class="section">
         <h2>Changes to This Privacy Policy</h2>
         <p>
-            We may update this privacy policy from time to time. Any changes will be reflected 
+            We may update this privacy policy from time to time. Any changes will be reflected
             with an updated "Last updated" date at the top of this policy.
         </p>
     </div>
@@ -122,7 +137,7 @@
             If you have any questions about this privacy policy, please contact us at:
         </p>
         <p>
-            <a href="https://github.com/cpicoto/ww7ats">https://github.com/cpicoto/ww7ats</a>
+            <a href="mailto:cpicoto@hotmail.com">cpicoto@hotmail.com</a>
         </p>
     </div>
 </body>
