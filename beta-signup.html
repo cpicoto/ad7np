@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WW7ATS Beta Signup</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+            background: #f5f7fa;
+        }
+        .container {
+            background: #fff;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+        }
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #34495e;
+        }
+        input[type="text"],
+        input[type="email"] {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1em;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+        input[type="text"]:focus,
+        input[type="email"]:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(52,152,219,0.2);
+        }
+        .platform-group {
+            margin-bottom: 24px;
+        }
+        .platform-group p {
+            font-weight: 600;
+            color: #34495e;
+            margin-bottom: 10px;
+        }
+        .platform-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .platform-option {
+            display: flex;
+            align-items: center;
+            padding: 12px 14px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: border-color 0.2s, background 0.2s;
+        }
+        .platform-option:hover {
+            border-color: #3498db;
+            background: #f0f7ff;
+        }
+        .platform-option input[type="checkbox"] {
+            margin-right: 10px;
+            width: 18px;
+            height: 18px;
+            accent-color: #3498db;
+        }
+        .platform-option.checked {
+            border-color: #3498db;
+            background: #eaf4fd;
+        }
+        .platform-icon {
+            font-size: 1.4em;
+            margin-right: 8px;
+        }
+        button[type="submit"] {
+            background: #3498db;
+            color: #fff;
+            border: none;
+            padding: 14px 32px;
+            font-size: 1.05em;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.2s;
+        }
+        button[type="submit"]:hover {
+            background: #2980b9;
+        }
+        button[type="submit"]:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+        }
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 30px 0;
+        }
+        .success-message h2 {
+            color: #27ae60;
+        }
+        .error {
+            color: #e74c3c;
+            font-size: 0.9em;
+            margin-top: -16px;
+            margin-bottom: 16px;
+            display: none;
+        }
+        .callsign-note {
+            color: #7f8c8d;
+            font-size: 0.85em;
+            margin-top: -16px;
+            margin-bottom: 20px;
+        }
+        @media (max-width: 500px) {
+            .platform-options {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="signup-form-section">
+            <h1>WW7ATS Beta Signup</h1>
+            <p class="subtitle">
+                Sign up to be a beta tester for the WW7ATS app. Open to all licensed amateur radio operators.
+            </p>
+
+            <form id="beta-form" action="https://formsubmit.co/cpicoto@gmail.com" method="POST" novalidate>
+                <!-- FormSubmit configuration -->
+                <input type="hidden" name="_subject" value="WW7ATS Beta Signup">
+                <input type="hidden" name="_captcha" value="true">
+                <input type="hidden" name="_template" value="table">
+                <input type="text" name="_honey" style="display:none">
+                <input type="hidden" name="_next" id="next-url">
+
+                <label for="callsign">Callsign</label>
+                <input type="text" id="callsign" name="Callsign" placeholder="e.g. AD7NP" required autocomplete="off" spellcheck="false">
+                <p class="callsign-note">Your FCC-issued amateur radio callsign.</p>
+                <div class="error" id="callsign-error">Please enter your callsign.</div>
+
+                <div class="platform-group">
+                    <p>Which platforms would you like to beta test? (select all that apply)</p>
+                    <div class="platform-options">
+                        <label class="platform-option" id="opt-ios">
+                            <input type="checkbox" name="platform" value="ios">
+                            <span class="platform-icon">📱</span> iOS App
+                        </label>
+                        <label class="platform-option" id="opt-macos">
+                            <input type="checkbox" name="platform" value="macos">
+                            <span class="platform-icon">💻</span> macOS App
+                        </label>
+                        <label class="platform-option" id="opt-appletv">
+                            <input type="checkbox" name="platform" value="appletv">
+                            <span class="platform-icon">📺</span> Apple TV App
+                        </label>
+                        <label class="platform-option" id="opt-android">
+                            <input type="checkbox" name="platform" value="android">
+                            <span class="platform-icon">🤖</span> Android App
+                        </label>
+                    </div>
+                    <div class="error" id="platform-error" style="margin-top: 8px;">Please select at least one platform.</div>
+                </div>
+
+                <div id="appleid-group" style="display:none;">
+                    <label for="appleid">Apple ID (email)</label>
+                    <input type="email" id="appleid" name="Apple ID" placeholder="yourname@icloud.com">
+                    <p class="callsign-note">Required for iOS, macOS, and Apple TV beta via TestFlight.</p>
+                    <div class="error" id="appleid-error">Please enter a valid Apple ID email.</div>
+                </div>
+
+                <div id="gmail-group" style="display:none;">
+                    <label for="gmail">Gmail Address</label>
+                    <input type="email" id="gmail" name="Gmail" placeholder="yourname@gmail.com">
+                    <p class="callsign-note">Required for Android beta access via Google Play.</p>
+                    <div class="error" id="gmail-error">Please enter a valid Gmail address.</div>
+                </div>
+
+                <button type="submit" id="submit-btn">Sign Up for Beta</button>
+            </form>
+        </div>
+
+        <div class="success-message" id="success-message">
+            <h2>73! You're on the list!</h2>
+            <p>Thanks for signing up for the WW7ATS beta. We'll be in touch when your beta access is ready.</p>
+            <p>Keep your radios warm! 📻</p>
+        </div>
+    </div>
+
+    <script>
+        // Set the _next redirect to the current page with a success parameter
+        document.getElementById('next-url').value = window.location.href.split('?')[0] + '?success=1';
+
+        // Show success message if redirected back after submission
+        if (new URLSearchParams(window.location.search).get('success') === '1') {
+            document.getElementById('signup-form-section').style.display = 'none';
+            document.getElementById('success-message').style.display = 'block';
+        }
+
+        // Toggle checked styling on platform options
+        document.querySelectorAll('.platform-option input[type="checkbox"]').forEach(function(cb) {
+            cb.addEventListener('change', function() {
+                this.closest('.platform-option').classList.toggle('checked', this.checked);
+            });
+        });
+
+        // Show/hide Apple ID and Gmail fields based on platform selection
+        function updateAccountFields() {
+            var applePlatforms = document.querySelectorAll('input[value="ios"]:checked, input[value="macos"]:checked, input[value="appletv"]:checked');
+            var androidChecked = document.querySelector('input[value="android"]:checked');
+
+            document.getElementById('appleid-group').style.display = applePlatforms.length > 0 ? 'block' : 'none';
+            document.getElementById('gmail-group').style.display = androidChecked ? 'block' : 'none';
+        }
+        document.querySelectorAll('input[name="platform"]').forEach(function(cb) {
+            cb.addEventListener('change', updateAccountFields);
+        });
+
+        // Combine platform selections into a hidden field for the email
+        function setPlatformValue() {
+            var checked = Array.from(document.querySelectorAll('input[name="platform"]:checked')).map(function(c) { return c.value; });
+            var hidden = document.getElementById('platforms-hidden');
+            if (!hidden) {
+                hidden = document.createElement('input');
+                hidden.type = 'hidden';
+                hidden.name = 'Platforms';
+                hidden.id = 'platforms-hidden';
+                document.getElementById('beta-form').appendChild(hidden);
+            }
+            hidden.value = checked.join(', ');
+        }
+
+        document.getElementById('beta-form').addEventListener('submit', function(e) {
+            var valid = true;
+
+            // Callsign validation
+            var callsign = document.getElementById('callsign').value.trim();
+            var callsignError = document.getElementById('callsign-error');
+            if (!callsign) {
+                callsignError.style.display = 'block';
+                valid = false;
+            } else {
+                callsignError.style.display = 'none';
+            }
+
+            // Platform validation
+            var platforms = document.querySelectorAll('input[name="platform"]:checked');
+            var platformError = document.getElementById('platform-error');
+            if (platforms.length === 0) {
+                platformError.style.display = 'block';
+                valid = false;
+            } else {
+                platformError.style.display = 'none';
+            }
+
+            // Apple ID validation (required if any Apple platform selected)
+            var applePlatforms = document.querySelectorAll('input[value="ios"]:checked, input[value="macos"]:checked, input[value="appletv"]:checked');
+            var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (applePlatforms.length > 0) {
+                var appleId = document.getElementById('appleid').value.trim();
+                var appleIdError = document.getElementById('appleid-error');
+                if (!appleId || !emailPattern.test(appleId)) {
+                    appleIdError.style.display = 'block';
+                    valid = false;
+                } else {
+                    appleIdError.style.display = 'none';
+                }
+            }
+
+            // Gmail validation (required if Android selected)
+            var androidChecked = document.querySelector('input[value="android"]:checked');
+            if (androidChecked) {
+                var gmail = document.getElementById('gmail').value.trim();
+                var gmailError = document.getElementById('gmail-error');
+                if (!gmail || !emailPattern.test(gmail)) {
+                    gmailError.style.display = 'block';
+                    valid = false;
+                } else {
+                    gmailError.style.display = 'none';
+                }
+            }
+
+            if (!valid) {
+                e.preventDefault();
+                return;
+            }
+
+            // Set combined platforms value before submit
+            setPlatformValue();
+
+            // Disable unchecked platform checkboxes so they don't submit individual values
+            document.querySelectorAll('input[name="platform"]').forEach(function(cb) {
+                cb.disabled = true;
+            });
+        });
+    </script>
+</body>
+</html>
