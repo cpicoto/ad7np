@@ -29,25 +29,25 @@
     <div><strong>Download PDF:</strong> <a href="wwats-conference-paper-draft.pdf">wwats-conference-paper-draft.pdf</a></div>
   </div>
   <div class="card paper">
-    <p>from DVB-T DATV Ingestion to Mobile RTMP Control Carlos Picoto Draft (conference-ready after template conversion)</p>
+    <p>Engineering a Low-Latency Amateur Television Streaming Stack from DVB-T DATV Ingestion to Mobile RTMP Control Carlos Picoto Draft (conference-ready after template conversion)</p>
     <h2>Abstract</h2>
-    <p>Amateur television (ATV) operators increasingly want to broadcast RF-derived video to the wider internet with a workflow that remains reliable under real-world conditions: unstable uplinks, short-lived publishing sessions, and operator-driven controls (e.g., push-to-talk). This paper describes an end-to-end streaming stack built around three practical components: (1) a desktop DVB-T DATV ingest and relay application (HiDesReceiver), (2) a cloud headend that translates and distributes media (MediaMTX + nginx on an Azure VM), and (3) a native operator client that supports a low-latency viewer and one-tap RTMP broadcasting (WW7ATS). We focus on engineering choices that reduce operational friction: protocol boundaries, secure credential handling, explicit connection-state UX, and monitoring hooks that integrate with the operational dashboard of a live amateur repeater. The system demonstrates how modern streaming infrastructure can be made robust and operator-friendly for small communities without requiring specialized streaming expertise.</p>
+    <p>Amateur television (ATV) operators increasingly want to transmit RF-derived video to the wider internet with a workflow that remains reliable under real-world conditions: unstable uplinks, short-lived publishing sessions, and operator-driven controls (e.g., push-to-talk). This paper describes an end-to-end streaming stack built around three practical components: (1) a desktop DVB-T DATV ingest and relay application (HiDesReceiver), (2) a cloud headend that translates and distributes media (MediaMTX + nginx on an Azure VM), and (3) a native operator client that supports a low-latency viewer and one-tap RTMP transmission (WW7ATS). We focus on engineering choices that reduce operational friction: protocol boundaries, secure credential handling, explicit connection-state UX, and monitoring hooks that integrate with the operational dashboard of a live amateur repeater. The system demonstrates how modern streaming infrastructure can be made robust and operator-friendly for small communities without requiring specialized streaming expertise.</p>
     <p><strong>Keywords:</strong> amateur television, DATV, RTMP, HLS, MediaMTX, low-latency streaming, SwiftUI, operational UX</p>
     <h2>Introduction</h2>
     <p>Amateur television is a gateway technology between RF video transmission and internet distribution. Traditional ATV workflows evolved for over-the-air viewing, but today operators want to preserve the spontaneity of live RF operation while enabling remote viewers. In practice, this means bridging heterogeneous systems:</p>
     <ul>
       <li><strong>RF/receiver side (DVB-T DATV):</strong> ingest must handle consumer-grade devices and field conditions.</li>
       <li><strong>Transport and distribution:</strong> viewers expect smooth playback, authentication, and resiliency.</li>
-      <li><strong>Operator side:</strong> the workflow must be simple enough for “push-to-broadcast” operation, not a streaming studio.</li>
+      <li><strong>Operator side:</strong> the workflow must be simple enough for “push-to-transmit” operation, not a streaming studio.</li>
     </ul>
     <p>This paper presents the engineering of a complete stack developed for WW7ATS (Western Washington Amateur Television Society). The core goal is <em>operational reliability under live conditions</em>: the stack must tolerate short-lived publishing sessions, handle disconnect patterns without confusing operators, and make secure configuration easy.</p>
     <p>The contribution is not a new streaming protocol. Instead, we contribute a system-level design and implementation approach for assembling a practical, low-latency amateur streaming pipeline from proven components.</p>
     <h2>Related Work</h2>
-    <p>ATV streaming overlaps with broader work on low-latency streaming, adaptive delivery, and mobile broadcasting.</p>
+    <p>ATV streaming overlaps with broader work on low-latency streaming, adaptive delivery, and mobile transmission.</p>
     <ul>
       <li><strong>RTMP and HLS:</strong> RTMP remains common for ingest and operator-driven publishing; HLS is widely supported for playback.</li>
       <li><strong>Low-latency HLS:</strong> shortened segments and parts reduce perceived delay while remaining compatible with standard playback.</li>
-      <li><strong>Operator UX in live streaming:</strong> broadcast controls that map directly to connection state are widely recognized as crucial, especially for non-expert operators.</li>
+      <li><strong>Operator UX in live streaming:</strong> transmit controls that map directly to connection state are widely recognized as crucial, especially for non-expert operators.</li>
       <li><strong>Streaming relays/transcoders:</strong> MediaMTX provides lightweight translation and distribution with runtime APIs that can support monitoring.</li>
     </ul>
     <p>Our focus is the integration of these ideas into a cohesive amateur-TV workflow.</p>
@@ -144,13 +144,13 @@
     <h2>Implementation Figures</h2>
     <p>This section includes representative screenshots from the real deployment workflow.</p>
     <ul>
-      <li><strong>OBS Studio interface (Figure 1):</strong> supports live production by presenting operator previews and the broadcast program outputs in parallel.</li>
+      <li><strong>OBS Studio interface (Figure 1):</strong> supports live production by presenting operator previews and the transmission program outputs in parallel.</li>
       <li><strong>HiDes DATV controller + AllStar control (Figures 2-3):</strong> consolidates RF/transmitter settings, receiver status, and node/operator signaling into one working surface.</li>
       <li><strong>Spectrum monitoring (Figure 4):</strong> provides immediate feedback for narrowband signal presence and the transition to “no signal” operations.</li>
     </ul>
     <figure>
       <img src="figures/slide01_pic02.png" alt="" />
-      <figcaption>OBS Studio interface in Studio Mode showing simultaneous preview and program outputs for a live broadcast workflow.</figcaption>
+      <figcaption>OBS Studio interface in Studio Mode showing simultaneous preview and program outputs for a live transmission workflow.</figcaption>
     </figure>
     <figure>
       <img src="figures/slide01_pic03.png" alt="" />
