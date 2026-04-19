@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DATV Journal Contribution (Jim Andrews)</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; line-height: 1.6; max-width: 900px; margin: 0 auto; padding: 24px 18px; color: #e8e8e8; background: #0a0a0a; }
+    h1 { color: #fff; font-size: 1.5rem; margin-bottom: 10px; }
+    .sub { color: #8ec5fc; margin-bottom: 18px; }
+    .card { background: #111; border: 1px solid #222; border-radius: 12px; padding: 16px; margin-top: 14px; }
+    a { color: #8ec5fc; }
+    img { max-width: 100%; height: auto; border: 1px solid #222; border-radius: 10px; }
+    figcaption { margin-top: 8px; color: #b0b0b0; font-size: 0.95rem; }
+    pre { white-space: pre-wrap; word-break: break-word; background: #0b0b0b; border: 1px solid #222; border-radius: 10px; padding: 14px; color: #eaeaea; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; font-size: 0.92rem; }
+  </style>
+</head>
+<body>
+  <h1>DATV Journal Contribution (Draft for Jim’s ATV Journal)</h1>
+  <div class="sub">Issue #207 • short contribution + one figure</div>
+
+  <div class="card">
+    <strong>Download PDF:</strong> <a href="contribution.pdf">contribution.pdf</a>
+  </div>
+
+  <div class="card">
+    <h2 style="margin: 0 0 10px; color:#fff;">Contribution text</h2>
+    <pre>DATV software tools for reliable amateur transmit/receive
+
+Hi Jim and BATVC readers,
+
+For our WW7ATS Digital Amateur Television (DATV) repeater workflow, we built a practical software toolchain that connects RF DATV ingest to an operator-friendly internet viewing experience. The stack combines:
+
+- HiDesReceiver (desktop): DVB-T DATV reception and control, feeding the streaming path.
+- WW7ATS (native mobile/desktop app): a PTT (push-to-talk) transmit interface with clear connection-state UX, secure stream-key handling, and a low-latency HLS viewer.
+- Azure MediaMTX + nginx (cloud headend): RTMP/RTMPS ingest and remux to HLS, with automation hooks and an API for monitoring.
+
+Engineering emphasis: field reliability under short operator transmit sessions, deterministic headend behavior, and straightforward monitoring so net control can quickly verify “signal vs no-signal” and operator connection state.
+
+Figure 1 shows the spectrum monitoring view we use to confirm narrowband signal presence and transitions back to “no signal” operations.
+
+73 de Carlos (AD7NP)</pre>
+  </div>
+
+  <div class="card">
+    <h2 style="margin: 0 0 10px; color:#fff;">Figure 1</h2>
+    <figure>
+      <img src="slide24_pic01.png" alt="Spectrum monitoring view" />
+      <figcaption>Spectrum monitoring view used to verify narrowband signal presence and no-signal transitions.</figcaption>
+    </figure>
+  </div>
+</body>
+</html>
