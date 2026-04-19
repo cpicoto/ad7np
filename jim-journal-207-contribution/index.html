@@ -25,19 +25,37 @@
 
   <div class="card">
     <h2 style="margin: 0 0 10px; color:#fff;">Contribution text</h2>
-    <pre>DATV software tools for reliable amateur transmit/receive
+    <pre>WW7ATS DATV transmit/receive software toolchain
 
 Hi Jim and BATVC readers,
 
-For our WW7ATS Digital Amateur Television (DATV) repeater workflow, we built a practical software toolchain that connects RF DATV ingest to an operator-friendly internet viewing experience. The stack combines:
+For WW7ATS we run a DATV repeater workflow that couples RF delivery to an operator-controlled internet distribution pipeline.
 
-- HiDesReceiver (desktop): DVB-T DATV reception and control, feeding the streaming path.
-- WW7ATS (native mobile/desktop app): a PTT (push-to-talk) transmit interface with clear connection-state UX, secure stream-key handling, and a low-latency HLS viewer.
-- Azure MediaMTX + nginx (cloud headend): RTMP/RTMPS ingest and remux to HLS, with automation hooks and an API for monitoring.
+The stack has three roles:
 
-Engineering emphasis: field reliability under short operator transmit sessions, deterministic headend behavior, and straightforward monitoring so net control can quickly verify “signal vs no-signal” and operator connection state.
+1) RF ingest & control (HiDesReceiver)
+   A DVB-T DATV receiver/control program that sets the RF/DATV parameters and maintains a stable feed for downstream streaming.
+   In practice, it gives operators an immediate “signal vs no-signal” view and dependable control behavior during short sessions and RF dropouts.
 
-Figure 1 shows the spectrum monitoring view we use to confirm narrowband signal presence and transitions back to “no signal” operations.
+2) Operator transmit/receive app (WW7ATS)
+   A native app (iOS/iPadOS/macOS) that lets an operator:
+   - watch the incoming feed (native low-latency HLS playback)
+   - start/stop an RTMP transmit session with one large PTT control
+   - see clear connection-state UX (“connecting”, “ON AIR”, “failed”) and a simple retry action
+   Stream keys are stored in the OS Keychain (no plain-text persistence), and the app uses audio/session handling to avoid feedback while transmitting.
+
+3) Cloud headend (Azure VM: MediaMTX + nginx)
+   MediaMTX accepts RTMP/RTMPS ingest, remuxes to low-latency HLS for viewers, and provides runtime hooks + an API for monitoring.
+   The headend sends connection events on connect/disconnect to the legacy WW7ATS repeater dashboard so net control can verify when a transmit session is actually live.
+
+How we operate (field workflow):
+
+- Before transmitting, operators verify RF presence using the spectrum/signal monitor view (Figure 1).
+- The operator prepares the OBS scene/camera and taps PTT.
+- The WW7ATS status chip confirms the session state; if anything fails, the operator retries without re-entering credentials.
+- Net control watches the connection events and monitoring signals to confirm “signal vs no-signal” and that the correct path is publishing.
+
+This design was built for field reality: short operator sessions, occasional RF transitions, and minimal friction for licensed amateurs.
 
 73 de Carlos (AD7NP)</pre>
   </div>
@@ -46,7 +64,7 @@ Figure 1 shows the spectrum monitoring view we use to confirm narrowband signal 
     <h2 style="margin: 0 0 10px; color:#fff;">Figure 1</h2>
     <figure>
       <img src="slide24_pic01.png" alt="Spectrum monitoring view" />
-      <figcaption>Spectrum monitoring view used to verify narrowband signal presence and no-signal transitions.</figcaption>
+      <figcaption>Spectrum monitoring view used to verify narrowband signal presence and transitions back to “no signal”.</figcaption>
     </figure>
   </div>
 </body>
