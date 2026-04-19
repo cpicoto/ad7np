@@ -54,12 +54,10 @@
     <h2>System Overview</h2>
     <p>The stack architecture is summarized below.</p>
     <p>Operationally, HiDesReceiver provides DVB-T DATV ingest, WW7ATS provides an operator-controlled RTMP push-to-transmit workflow, and the Azure MediaMTX headend remuxes into low-latency HLS for viewers.</p>
-    <p>The stack consists of:</p>
-    <ol>
       <li><strong>HiDesReceiver (desktop ingest/relay):</strong> a C# WinForms application for DVB-T DATV reception and relay/streaming into internet distribution paths.</li>
       <li><strong>Azure headend (MediaMTX + nginx):</strong> a cloud VM that accepts RTMP/RTMPS ingest, remuxes to HLS for viewers, and terminates TLS for HTTPS delivery.</li>
       <li><strong>WW7ATS operator client (native apps):</strong> a SwiftUI iOS/iPadOS/macOS application that combines (a) a stream viewer using native playback and (b) a push-to-transmit UI for one-tap RTMP publishing.</li>
-    </ol>
+    <p>The stack consists of:</p>
     <h3>Operational requirements</h3>
     <p>From deployment experience, key requirements are:</p>
     <ul>
@@ -156,13 +154,11 @@
       <figcaption>Spectrum monitoring view showing narrowband signal peaks above the noise floor and no-signal status indicators.</figcaption>
     </figure>
     <h2>Lessons Learned</h2>
-    <p>Across the development and deployment of HiDesReceiver, the Azure headend, and WW7ATS, we observed several repeatable engineering lessons:</p>
-    <ol>
       <li><strong>Design for short, imperfect sessions.</strong> Amateur systems should assume that “publish” is a transient action rather than a stable long-running stream.</li>
       <li><strong>Separate operator UX from protocol mechanics.</strong> Operators need a small set of actionable states (idle, connecting, on air, failed).</li>
       <li><strong>Make secure configuration frictionless.</strong> Storing stream keys securely and validating connection parameters prevents a large class of field failures.</li>
       <li><strong>Integrate monitoring with the operational dashboard.</strong> Streaming is part of an event workflow, not just a technical pipeline.</li>
-    </ol>
+    <p>Across the development and deployment of HiDesReceiver, the Azure headend, and WW7ATS, we observed several repeatable engineering lessons:</p>
     <h2>Future Work</h2>
     <p>Potential improvements include:</p>
     <ul>
@@ -173,10 +169,6 @@
     </ul>
     <h2>Conclusion</h2>
     <p>This paper presented an end-to-end amateur television streaming stack that combines DVB-T DATV ingest, a cloud headend for RTMP-to-HLS distribution, and a native push-to-transmit operator client. The main engineering takeaway is that success in small-community live streaming depends on system integration: secure and validated configuration, explicit connection-state UX, deterministic publishing behavior at the headend, and operational monitoring hooks that fit real event workflows.</p>
-    <p>bibitemmediamtx urlhttps://github.com/aler9/mediamtx</p>
-    <p>bibitemhaishinkit HaishinKit.swift, urlhttps://github.com/shogo4405/HaishinKit.swift</p>
-    <p>bibitemswiftui Apple SwiftUI Documentation, urlhttps://developer.apple.com/xcode/swiftui/</p>
-    <p>bibitemietf-hls RFC 8216 (HTTP Live Streaming) overview and related HLS specifications.</p>
   </div>
 </body>
 </html>
