@@ -32,7 +32,7 @@
     <p>from DVB-T DATV Ingestion to Mobile RTMP Control</p>
     <h2>Abstract</h2>
     <p>Amateur television (DATV) operators increasingly want to transmit RF-derived video to the wider internet with a workflow that remains reliable under real-world conditions: unstable uplinks, short-lived publishing sessions, and operator-driven controls (e.g., push-to-talk). This paper describes an end-to-end streaming stack built around three practical components: (1) a desktop DVB-T DATV ingest and relay application (HiDesReceiver), (2) a cloud headend that translates and distributes media (MediaMTX + nginx on an Azure VM), and (3) a native operator client that supports a low-latency viewer and one-tap RTMP transmission (WW7ATS). We focus on engineering choices that reduce operational friction: protocol boundaries, secure credential handling, explicit connection-state UX, and monitoring hooks that integrate with the operational dashboard of a live amateur repeater. The system demonstrates how modern streaming infrastructure can be made robust and operator-friendly for small communities without requiring specialized streaming expertise.</p>
-    <p>textbfKeywords: amateur television, DATV, RTMP, HLS, MediaMTX, low-latency streaming, SwiftUI, operational UX</p>
+    <p><strong>Keywords:</strong> amateur television, DATV, RTMP, HLS, MediaMTX, low-latency streaming, SwiftUI, operational UX</p>
     <h2>Introduction</h2>
     <p>Amateur television is a gateway technology between RF video transmission and internet distribution. Traditional DATV workflows evolved for over-the-air viewing, but today operators want to preserve the spontaneity of live RF operation while enabling remote viewers. In practice, this means bridging heterogeneous systems:</p>
     <ul>
@@ -40,7 +40,7 @@
       <li><strong>Transport and distribution:</strong> viewers expect smooth playback, authentication, and resiliency.</li>
       <li><strong>Operator side:</strong> the workflow must be simple enough for “push-to-transmit” operation, not a streaming studio.</li>
     </ul>
-    <p>This paper presents the engineering of a complete stack developed for WW7ATS (Western Washington Amateur Television Society). The core goal is emphoperational reliability under live conditions: the stack must tolerate short-lived publishing sessions, handle disconnect patterns without confusing operators, and make secure configuration easy.</p>
+    <p>This paper presents the engineering of a complete stack developed for WW7ATS (Western Washington Amateur Television Society). The core goal is <em>operational reliability</em> under live conditions: the stack must tolerate short-lived publishing sessions, handle disconnect patterns without confusing operators, and make secure configuration easy.</p>
     <p>The contribution is not a new streaming protocol. Instead, we contribute a system-level design and implementation approach for assembling a practical, low-latency amateur streaming pipeline from proven components.</p>
     <h2>Related Work</h2>
     <p>DATV streaming overlaps with broader work on low-latency streaming, adaptive delivery, and mobile transmission.</p>
@@ -90,7 +90,7 @@
     <h2>Desktop Ingest: HiDesReceiver</h2>
     <p>HiDesReceiver complements the operator client by handling DVB-T DATV reception. While the paper does not attempt to re-derive codec or demodulation theory, it emphasizes an engineering principle:</p>
     <blockquote>
-    <p>emphIn an amateur system, ingest tooling must tolerate hardware variability and still produce a consistent publishing stream.</p>
+    <p><em>In an amateur system, ingest tooling must tolerate hardware variability and still produce a consistent publishing stream.</em></p>
     </blockquote>
     <p>The desktop application provides a pragmatic bridge between RF reception and an internet-friendly ingest protocol, allowing operators to reuse the same cloud headend and viewer experience.</p>
     <h2>Operator Client Engineering (WW7ATS)</h2>
