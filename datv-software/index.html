@@ -3,239 +3,189 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DATV Software Paper - WW7ATS / HiDesReceiver</title>
+  <title>DATV Software Paper</title>
   <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-      line-height: 1.6;
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 24px 18px;
-      color: #e8e8e8;
-      background: #0a0a0a;
-    }
-    h1 {
-      color: #fff;
-      margin-bottom: 6px;
-      font-size: 1.6rem;
-    }
-    .sub {
-      color: #8ec5fc;
-      margin-bottom: 18px;
-      font-size: 1.05rem;
-    }
-    .card {
-      background: #111;
-      border: 1px solid #222;
-      border-radius: 12px;
-      padding: 16px;
-      margin-top: 14px;
-    }
-    .meta a {
-      color: #8ec5fc;
-    }
-    .paper {
-      margin-top: 12px;
-    }
-    pre {
-      white-space: pre-wrap;
-      word-break: break-word;
-      background: #0b0b0b;
-      border: 1px solid #222;
-      border-radius: 10px;
-      padding: 14px;
-      color: #eaeaea;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
-      font-size: 0.92rem;
-    }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; line-height: 1.65; max-width: 980px; margin: 0 auto; padding: 24px 18px; color: #e8e8e8; background: #0a0a0a; }
+    h1 { color: #fff; font-size: 1.6rem; margin-bottom: 6px; }
+    .sub { color: #8ec5fc; margin-bottom: 18px; }
+    .card { background: #111; border: 1px solid #222; border-radius: 12px; padding: 16px; margin-top: 14px; }
+    a { color: #8ec5fc; }
+    h2 { color: #fff; margin-top: 22px; }
+    h3 { color: #8ec5fc; margin-top: 18px; }
+    p { margin: 10px 0; }
+    ul, ol { padding-left: 20px; }
+    li { margin: 6px 0; }
+    blockquote { margin: 10px 0; padding: 12px 14px; background: #0b0b0b; border: 1px solid #222; border-radius: 10px; color: #dcdcdc; }
+    figure { margin: 16px 0; }
+    img { max-width: 100%; height: auto; border: 1px solid #222; border-radius: 10px; }
+    figcaption { margin-top: 8px; color: #b0b0b0; font-size: 0.95rem; }
+    code { background: #0b0b0b; border: 1px solid #222; padding: 2px 6px; border-radius: 8px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; font-size: 0.9em; }
   </style>
 </head>
 <body>
   <h1>DATV Software Conference Paper (Draft)</h1>
   <div class="sub">WW7ATS (mobile RTMP control) + HiDesReceiver (DVB-T DATV ingest) + MediaMTX headend</div>
-
   <div class="card meta">
     <div><strong>Download PDF:</strong> <a href="wwats-conference-paper-draft.pdf">wwats-conference-paper-draft.pdf</a></div>
-    <div style="margin-top:8px;">You can also copy the plain-text/Markdown version from the page below.</div>
   </div>
-
   <div class="card paper">
-    <h2 style="color:#fff; margin-bottom:12px;">Figures</h2>
-
-    <figure style="margin:0 0 18px;">
-      <img src="figures/slide01_pic02.png" style="max-width:100%; border:1px solid #222; border-radius:10px;" alt="OBS Studio interface" />
-      <figcaption style="margin-top:8px; color:#b0b0b0; font-size:0.95rem;">OBS Studio interface in Studio Mode showing simultaneous preview and program outputs for a live broadcast workflow.</figcaption>
+    <p>from DVB-T DATV Ingestion to Mobile RTMP Control Carlos Picoto Draft (conference-ready after template conversion)</p>
+    <h2>Abstract</h2>
+    <p>Amateur television (ATV) operators increasingly want to broadcast RF-derived video to the wider internet with a workflow that remains reliable under real-world conditions: unstable uplinks, short-lived publishing sessions, and operator-driven controls (e.g., push-to-talk). This paper describes an end-to-end streaming stack built around three practical components: (1) a desktop DVB-T DATV ingest and relay application (HiDesReceiver), (2) a cloud headend that translates and distributes media (MediaMTX + nginx on an Azure VM), and (3) a native operator client that supports a low-latency viewer and one-tap RTMP broadcasting (WW7ATS). We focus on engineering choices that reduce operational friction: protocol boundaries, secure credential handling, explicit connection-state UX, and monitoring hooks that integrate with the operational dashboard of a live amateur repeater. The system demonstrates how modern streaming infrastructure can be made robust and operator-friendly for small communities without requiring specialized streaming expertise.</p>
+    <p><strong>Keywords:</strong> amateur television, DATV, RTMP, HLS, MediaMTX, low-latency streaming, SwiftUI, operational UX</p>
+    <h2>Introduction</h2>
+    <p>Amateur television is a gateway technology between RF video transmission and internet distribution. Traditional ATV workflows evolved for over-the-air viewing, but today operators want to preserve the spontaneity of live RF operation while enabling remote viewers. In practice, this means bridging heterogeneous systems:</p>
+    <ul>
+      <li><strong>RF/receiver side (DVB-T DATV):</strong> ingest must handle consumer-grade devices and field conditions.</li>
+      <li><strong>Transport and distribution:</strong> viewers expect smooth playback, authentication, and resiliency.</li>
+      <li><strong>Operator side:</strong> the workflow must be simple enough for “push-to-broadcast” operation, not a streaming studio.</li>
+    </ul>
+    <p>This paper presents the engineering of a complete stack developed for WW7ATS (Western Washington Amateur Television Society). The core goal is <em>operational reliability under live conditions</em>: the stack must tolerate short-lived publishing sessions, handle disconnect patterns without confusing operators, and make secure configuration easy.</p>
+    <p>The contribution is not a new streaming protocol. Instead, we contribute a system-level design and implementation approach for assembling a practical, low-latency amateur streaming pipeline from proven components.</p>
+    <h2>Related Work</h2>
+    <p>ATV streaming overlaps with broader work on low-latency streaming, adaptive delivery, and mobile broadcasting.</p>
+    <ul>
+      <li><strong>RTMP and HLS:</strong> RTMP remains common for ingest and operator-driven publishing; HLS is widely supported for playback.</li>
+      <li><strong>Low-latency HLS:</strong> shortened segments and parts reduce perceived delay while remaining compatible with standard playback.</li>
+      <li><strong>Operator UX in live streaming:</strong> broadcast controls that map directly to connection state are widely recognized as crucial, especially for non-expert operators.</li>
+      <li><strong>Streaming relays/transcoders:</strong> MediaMTX provides lightweight translation and distribution with runtime APIs that can support monitoring.</li>
+    </ul>
+    <p>Our focus is the integration of these ideas into a cohesive amateur-TV workflow.</p>
+    <h2>System Overview</h2>
+    <p>The stack architecture is summarized below.</p>
+    <p>Operationally, HiDesReceiver provides DVB-T DATV ingest, WW7ATS provides an operator-controlled RTMP push-to-transmit workflow, and the Azure MediaMTX headend remuxes into low-latency HLS for viewers.</p>
+    <p>The stack consists of:</p>
+    <ol>
+      <li><strong>HiDesReceiver (desktop ingest/relay):</strong> a C# WinForms application for DVB-T DATV reception and relay/streaming into internet distribution paths.</li>
+      <li><strong>Azure headend (MediaMTX + nginx):</strong> a cloud VM that accepts RTMP/RTMPS ingest, remuxes to HLS for viewers, and terminates TLS for HTTPS delivery.</li>
+      <li><strong>WW7ATS operator client (native apps):</strong> a SwiftUI iOS/iPadOS/macOS application that combines (a) a stream viewer using native playback and (b) a push-to-transmit UI for one-tap RTMP publishing.</li>
+    </ol>
+    <h3>Operational requirements</h3>
+    <p>From deployment experience, key requirements are:</p>
+    <ul>
+      <li><strong>Short sessions are common.</strong> Operators may test quickly; the headend must avoid confusing state transitions.</li>
+      <li><strong>Ingest and playback must be decoupled.</strong> Publishing should not depend on viewer presence.</li>
+      <li><strong>Secure configuration must be simple.</strong> Stream keys must be stored securely and validated before any connection attempt.</li>
+      <li><strong>Monitoring must be human-friendly.</strong> Operators and net control need a reliable signal of what is actually happening.</li>
+    </ul>
+    <h2>Cloud Headend Engineering</h2>
+    <p>The headend is hosted on an Azure VM running Ubuntu. It provides the protocol boundary between operator publishing and viewer playback.</p>
+    <h3>MediaMTX runtime behavior</h3>
+    <p>MediaMTX is configured to:</p>
+    <ul>
+      <li>expose an API (used by monitoring/automation),</li>
+      <li>accept RTMP (<code>:1935</code>) and RTMPS (<code>:1936</code>),</li>
+      <li>provide HLS output (origin on <code>:8888</code>),</li>
+      <li>support additional listeners when needed (e.g., SRT),</li>
+      <li>enforce path defaults so that a deterministic publisher policy can be applied.</li>
+    </ul>
+    <p>In the WW7ATS deployment, HLS is remuxed into short segments/parts to reduce playback delay while remaining compatible with common clients.</p>
+    <h3>Authentication and operational hooks</h3>
+    <p>To support amateur-repeater workflows, the headend integrates with the operational dashboard:</p>
+    <ul>
+      <li>authentication is implemented via HTTP validation endpoints,</li>
+      <li>connection events are sent to the legacy WW7ATS dashboard using runtime hooks (<code>runOnConnect</code> / <code>runOnDisconnect</code>).</li>
+    </ul>
+    <p>This integration makes the streaming pipeline observable as part of the live amateur event.</p>
+    <h3>Operational robustness</h3>
+    <p>We include a fallback “no signal” slate path via a looping FFmpeg publisher service. This prevents viewer confusion during transitions (e.g., when the operator stops transmitting).</p>
+    <h2>Desktop Ingest: HiDesReceiver</h2>
+    <p>HiDesReceiver complements the operator client by handling DVB-T DATV reception. While the paper does not attempt to re-derive codec or demodulation theory, it emphasizes an engineering principle:</p>
+    <blockquote>
+    <p><em>In an amateur system, ingest tooling must tolerate hardware variability and still produce a consistent publishing stream.</em></p>
+    </blockquote>
+    <p>The desktop application provides a pragmatic bridge between RF reception and an internet-friendly ingest protocol, allowing operators to reuse the same cloud headend and viewer experience.</p>
+    <h2>Operator Client Engineering (WW7ATS)</h2>
+    <p>WW7ATS is a native SwiftUI app designed around the operator’s workflow: watch the feed, prepare the camera, and transmit with a single action.</p>
+    <h3>Viewer and transmitter in one UI</h3>
+    <p>WW7ATS provides:</p>
+    <ul>
+      <li>a live stream viewer implemented with native HLS playback,</li>
+      <li>a push-to-talk (PTT) transmit control that starts and stops an RTMP session,</li>
+      <li>camera preview with picture-in-picture (PiP) and interaction controls (pinch-to-zoom, double-tap enlarge, and orientation-aware behavior).</li>
+    </ul>
+    <p>A critical design choice is mapping operator gestures to networking state:</p>
+    <ul>
+      <li>connecting shows a progress state,</li>
+      <li>successful publishing shows an “ON AIR” state,</li>
+      <li>errors surface a clear retry action.</li>
+    </ul>
+    <h3>Streaming session management</h3>
+    <p>The app’s implementation is organized around a stream manager responsible for:</p>
+    <ul>
+      <li>camera/microphone capture and encoding setup,</li>
+      <li>session building for RTMP publishing,</li>
+      <li>lifecycle transitions when PTT begins/ends.</li>
+    </ul>
+    <p>The outbound stream quality is controlled via explicit presets (e.g., low/medium/high). The setting is applied at the start of a PTT session to avoid mid-stream renegotiation complexity.</p>
+    <h3>Secure credentials and validation</h3>
+    <p>The operator client stores the stream key in the OS keychain and does not persist it in plain application settings. Before starting a session, the app validates the server URL and stream key structure to prevent malformed connections.</p>
+    <h3>Audio feedback prevention</h3>
+    <p>To avoid audio feedback during transmission, playback is muted whenever PTT is active. The app also configures an appropriate audio session profile when transmitting so the operator can hear the repeater downlink while the microphone is live.</p>
+    <h2>Evaluation and Deployment Observations</h2>
+    <p>Instead of a traditional controlled experiment, the evaluation is based on deployment as part of an amateur repeater environment.</p>
+    <h3>Stability under real-world session patterns</h3>
+    <p>In practice, amateur streaming involves:</p>
+    <ul>
+      <li>brief test publishes,</li>
+      <li>rapid connects/disconnects,</li>
+      <li>mixed paths (e.g., test paths vs. the primary watch path).</li>
+    </ul>
+    <p>The system remains usable because:</p>
+    <ul>
+      <li>the headend enforces deterministic path behavior,</li>
+      <li>the operator client offers clear status chips and retry actions,</li>
+      <li>operational hooks provide net control visibility.</li>
+    </ul>
+    <h3>Operational monitoring as a first-class feature</h3>
+    <p>The stack includes automated monitoring and status reporting via the headend API and log inspection. This reduced troubleshooting time and allowed maintenance actions to be performed without ad-hoc debugging.</p>
+    <h3>Security and usability tradeoffs</h3>
+    <p>Keychain storage, URL validation, and clear error messaging improved reliability while reducing the likelihood of silent misconfiguration.</p>
+    <h2>Implementation Figures</h2>
+    <p>This section includes representative screenshots from the real deployment workflow.</p>
+    <ul>
+      <li><strong>OBS Studio interface (Figure 1):</strong> supports live production by presenting operator previews and the broadcast program outputs in parallel.</li>
+      <li><strong>HiDes DATV controller + AllStar control (Figures 2-3):</strong> consolidates RF/transmitter settings, receiver status, and node/operator signaling into one working surface.</li>
+      <li><strong>Spectrum monitoring (Figure 4):</strong> provides immediate feedback for narrowband signal presence and the transition to “no signal” operations.</li>
+    </ul>
+    <figure>
+      <img src="figures/slide01_pic02.png" alt="" />
+      <figcaption>OBS Studio interface in Studio Mode showing simultaneous preview and program outputs for a live broadcast workflow.</figcaption>
     </figure>
-
-    <figure style="margin:0 0 18px;">
-      <img src="figures/slide01_pic03.png" style="max-width:100%; border:1px solid #222; border-radius:10px;" alt="HiDes DATV + AllStar control" />
-      <figcaption style="margin-top:8px; color:#b0b0b0; font-size:0.95rem;">Integrated DATV transmission, reception, and AllStar node control interface.</figcaption>
+    <figure>
+      <img src="figures/slide01_pic03.png" alt="" />
+      <figcaption>Integrated DATV transmission, reception, and AllStar node control interface.</figcaption>
     </figure>
-
-    <figure style="margin:0 0 18px;">
-      <img src="figures/slide03_pic02.png" style="max-width:100%; border:1px solid #222; border-radius:10px;" alt="HiDes control interface" />
-      <figcaption style="margin-top:8px; color:#b0b0b0; font-size:0.95rem;">Integrated control interface for HiDes DATV receiver/transmitter and AllStar node operations.</figcaption>
+    <figure>
+      <img src="figures/slide03_pic02.png" alt="" />
+      <figcaption>Integrated control interface for HiDes DATV receiver/transmitter and AllStar node operations.</figcaption>
     </figure>
-
-    <figure style="margin:0 0 22px;">
-      <img src="figures/slide24_pic01.png" style="max-width:100%; border:1px solid #222; border-radius:10px;" alt="Spectrum monitoring" />
-      <figcaption style="margin-top:8px; color:#b0b0b0; font-size:0.95rem;">Spectrum monitoring view showing narrowband signal peaks above the noise floor and no-signal status indicators.</figcaption>
+    <figure>
+      <img src="figures/slide24_pic01.png" alt="" />
+      <figcaption>Spectrum monitoring view showing narrowband signal peaks above the noise floor and no-signal status indicators.</figcaption>
     </figure>
-
-    <pre># Engineering a Low-Latency Amateur Television Streaming Stack from DVB-T DATV Ingestion to Mobile RTMP Control
-
-**Author:** Carlos Picoto
-**Date:** Draft (conference-ready after template conversion)
-
-Engineering a Low-Latency Amateur Television Streaming Stack from DVB-T DATV Ingestion to Mobile RTMP Control
-Carlos Picoto
-Draft (conference-ready after template conversion)
-## Abstract
-
-Amateur television (ATV) operators increasingly want to broadcast RF-derived video to the wider internet with a workflow that remains reliable under real-world conditions: unstable uplinks, short-lived publishing sessions, and operator-driven controls (e.g., push-to-talk). This paper describes an end-to-end streaming stack built around three practical components: (1) a desktop DVB-T DATV ingest and relay application (HiDesReceiver), (2) a cloud headend that translates and distributes media (MediaMTX + nginx on an Azure VM), and (3) a native operator client that supports a low-latency viewer and one-tap RTMP broadcasting (WW7ATS). We focus on engineering choices that reduce operational friction: protocol boundaries, secure credential handling, explicit connection-state UX, and monitoring hooks that integrate with the operational dashboard of a live amateur repeater. The system demonstrates how modern streaming infrastructure can be made robust and operator-friendly for small communities without requiring specialized streaming expertise.
-
-**Keywords:** amateur television, DATV, RTMP, HLS, MediaMTX, low-latency streaming, SwiftUI, operational UX
-
-## Introduction
-
-Amateur television is a gateway technology between RF video transmission and internet distribution. Traditional ATV workflows evolved for over-the-air viewing, but today operators want to preserve the spontaneity of live RF operation while enabling remote viewers. In practice, this means bridging heterogeneous systems:
-- **RF/receiver side (DVB-T DATV):** ingest must handle consumer-grade devices and field conditions.
-- **Transport and distribution:** viewers expect smooth playback, authentication, and resiliency.
-- **Operator side:** the workflow must be simple enough for “push-to-broadcast” operation, not a streaming studio.
-
-This paper presents the engineering of a complete stack developed for WW7ATS (Western Washington Amateur Television Society). The core goal is *operational reliability under live conditions*: the stack must tolerate short-lived publishing sessions, handle disconnect patterns without confusing operators, and make secure configuration easy.
-The contribution is not a new streaming protocol. Instead, we contribute a system-level design and implementation approach for assembling a practical, low-latency amateur streaming pipeline from proven components.
-## Related Work
-
-ATV streaming overlaps with broader work on low-latency streaming, adaptive delivery, and mobile broadcasting.
-- **RTMP and HLS:** RTMP remains common for ingest and operator-driven publishing; HLS is widely supported for playback.
-- **Low-latency HLS:** shortened segments and parts reduce perceived delay while remaining compatible with standard playback.
-- **Operator UX in live streaming:** broadcast controls that map directly to connection state are widely recognized as crucial, especially for non-expert operators.
-- **Streaming relays/transcoders:** MediaMTX provides lightweight translation and distribution with runtime APIs that can support monitoring.
-
-Our focus is the integration of these ideas into a cohesive amateur-TV workflow.
-## System Overview
-
-figure[t]
-*Figure caption:* End-to-end architecture (high-level).
-
-figure
-The stack consists of:
-1. **HiDesReceiver (desktop ingest/relay):** a C\# WinForms application for DVB-T DATV reception and relay/streaming into internet distribution paths.
-2. **Azure headend (MediaMTX + nginx):** a cloud VM that accepts RTMP/RTMPS ingest, remuxes to HLS for viewers, and terminates TLS for HTTPS delivery.
-3. **WW7ATS operator client (native apps):** a SwiftUI iOS/iPadOS/macOS application that combines (a) a stream viewer using native playback and (b) a push-to-transmit UI for one-tap RTMP publishing.
-
-### Operational requirements
-
-From deployment experience, key requirements are:
-- **Short sessions are common.** Operators may test quickly; the headend must avoid confusing state transitions.
-- **Ingest and playback must be decoupled.** Publishing should not depend on viewer presence.
-- **Secure configuration must be simple.** Stream keys must be stored securely and validated before any connection attempt.
-- **Monitoring must be human-friendly.** Operators and net control need a reliable signal of what is actually happening.
-
-## Cloud Headend Engineering
-
-The headend is hosted on an Azure VM running Ubuntu. It provides the protocol boundary between operator publishing and viewer playback.
-### MediaMTX runtime behavior
-
-MediaMTX is configured to:
-- expose an API (used by monitoring/automation),
-- accept RTMP (`:1935`) and RTMPS (`:1936`),
-- provide HLS output (origin on `:8888`),
-- support additional listeners when needed (e.g., SRT),
-- enforce path defaults so that a deterministic publisher policy can be applied.
-
-In the WW7ATS deployment, HLS is remuxed into short segments/parts to reduce playback delay while remaining compatible with common clients.
-### Authentication and operational hooks
-
-To support amateur-repeater workflows, the headend integrates with the operational dashboard:
-- authentication is implemented via HTTP validation endpoints,
-- connection events are sent to the legacy WW7ATS dashboard using runtime hooks (`runOnConnect` / `runOnDisconnect`).
-
-This integration makes the streaming pipeline observable as part of the live amateur event.
-### Operational robustness
-
-We include a fallback “no signal” slate path via a looping FFmpeg publisher service. This prevents viewer confusion during transitions (e.g., when the operator stops transmitting).
-## Desktop Ingest: HiDesReceiver
-
-HiDesReceiver complements the operator client by handling DVB-T DATV reception. While the paper does not attempt to re-derive codec or demodulation theory, it emphasizes an engineering principle:
-&gt; *In an amateur system, ingest tooling must tolerate hardware variability and still produce a consistent publishing stream.*
-
-The desktop application provides a pragmatic bridge between RF reception and an internet-friendly ingest protocol, allowing operators to reuse the same cloud headend and viewer experience.
-## Operator Client Engineering (WW7ATS)
-
-WW7ATS is a native SwiftUI app designed around the operator’s workflow: watch the feed, prepare the camera, and transmit with a single action.
-### Viewer and transmitter in one UI
-
-WW7ATS provides:
-- a live stream viewer implemented with native HLS playback,
-- a push-to-talk (PTT) transmit control that starts and stops an RTMP session,
-- camera preview with picture-in-picture (PiP) and interaction controls (pinch-to-zoom, double-tap enlarge, and orientation-aware behavior).
-
-A critical design choice is mapping operator gestures to networking state:
-- connecting shows a progress state,
-- successful publishing shows an “ON AIR” state,
-- errors surface a clear retry action.
-
-### Streaming session management
-
-The app’s implementation is organized around a stream manager responsible for:
-- camera/microphone capture and encoding setup,
-- session building for RTMP publishing,
-- lifecycle transitions when PTT begins/ends.
-
-The outbound stream quality is controlled via explicit presets (e.g., low/medium/high). The setting is applied at the start of a PTT session to avoid mid-stream renegotiation complexity.
-### Secure credentials and validation
-
-The operator client stores the stream key in the OS keychain and does not persist it in plain application settings. Before starting a session, the app validates the server URL and stream key structure to prevent malformed connections.
-### Audio feedback prevention
-
-To avoid audio feedback during transmission, playback is muted whenever PTT is active. The app also configures an appropriate audio session profile when transmitting so the operator can hear the repeater downlink while the microphone is live.
-## Evaluation and Deployment Observations
-
-Instead of a traditional controlled experiment, the evaluation is based on deployment as part of an amateur repeater environment.
-### Stability under real-world session patterns
-
-In practice, amateur streaming involves:
-- brief test publishes,
-- rapid connects/disconnects,
-- mixed paths (e.g., test paths vs. the primary watch path).
-
-The system remains usable because:
-- the headend enforces deterministic path behavior,
-- the operator client offers clear status chips and retry actions,
-- operational hooks provide net control visibility.
-
-### Operational monitoring as a first-class feature
-
-The stack includes automated monitoring and status reporting via the headend API and log inspection. This reduced troubleshooting time and allowed maintenance actions to be performed without ad-hoc debugging.
-### Security and usability tradeoffs
-
-Keychain storage, URL validation, and clear error messaging improved reliability while reducing the likelihood of silent misconfiguration.
-## Lessons Learned
-
-Across the development and deployment of HiDesReceiver, the Azure headend, and WW7ATS, we observed several repeatable engineering lessons:
-1. **Design for short, imperfect sessions.** Amateur systems should assume that “publish” is a transient action rather than a stable long-running stream.
-2. **Separate operator UX from protocol mechanics.** Operators need a small set of actionable states (idle, connecting, on air, failed).
-3. **Make secure configuration frictionless.** Storing stream keys securely and validating connection parameters prevents a large class of field failures.
-4. **Integrate monitoring with the operational dashboard.** Streaming is part of an event workflow, not just a technical pipeline.
-
-## Future Work
-
-Potential improvements include:
-- adding adaptive bitrate control aligned with operator presets and uplink conditions,
-- extending ingest options (e.g., more robust support for alternative transport layers),
-- integrating richer telemetry into operator UI (e.g., connection quality indicators based on API metrics),
-- evaluating additional low-latency playback strategies.
-
-## Conclusion
-
-This paper presented an end-to-end amateur television streaming stack that combines DVB-T DATV ingest, a cloud headend for RTMP-to-HLS distribution, and a native push-to-transmit operator client. The main engineering takeaway is that success in small-community live streaming depends on system integration: secure and validated configuration, explicit connection-state UX, deterministic publishing behavior at the headend, and operational monitoring hooks that fit real event workflows.
-https://github.com/aler9/mediamtx
-HaishinKit.swift, https://github.com/shogo4405/HaishinKit.swift
-Apple SwiftUI Documentation, https://developer.apple.com/xcode/swiftui/
-RFC 8216 (HTTP Live Streaming) overview and related HLS specifications.
-</pre>
+    <h2>Lessons Learned</h2>
+    <p>Across the development and deployment of HiDesReceiver, the Azure headend, and WW7ATS, we observed several repeatable engineering lessons:</p>
+    <ol>
+      <li><strong>Design for short, imperfect sessions.</strong> Amateur systems should assume that “publish” is a transient action rather than a stable long-running stream.</li>
+      <li><strong>Separate operator UX from protocol mechanics.</strong> Operators need a small set of actionable states (idle, connecting, on air, failed).</li>
+      <li><strong>Make secure configuration frictionless.</strong> Storing stream keys securely and validating connection parameters prevents a large class of field failures.</li>
+      <li><strong>Integrate monitoring with the operational dashboard.</strong> Streaming is part of an event workflow, not just a technical pipeline.</li>
+    </ol>
+    <h2>Future Work</h2>
+    <p>Potential improvements include:</p>
+    <ul>
+      <li>adding adaptive bitrate control aligned with operator presets and uplink conditions,</li>
+      <li>extending ingest options (e.g., more robust support for alternative transport layers),</li>
+      <li>integrating richer telemetry into operator UI (e.g., connection quality indicators based on API metrics),</li>
+      <li>evaluating additional low-latency playback strategies.</li>
+    </ul>
+    <h2>Conclusion</h2>
+    <p>This paper presented an end-to-end amateur television streaming stack that combines DVB-T DATV ingest, a cloud headend for RTMP-to-HLS distribution, and a native push-to-transmit operator client. The main engineering takeaway is that success in small-community live streaming depends on system integration: secure and validated configuration, explicit connection-state UX, deterministic publishing behavior at the headend, and operational monitoring hooks that fit real event workflows.</p>
+    <p><a href="https://github.com/aler9/mediamtx">https://github.com/aler9/mediamtx</a></p>
+    <p>HaishinKit.swift, <a href="https://github.com/shogo4405/HaishinKit.swift">https://github.com/shogo4405/HaishinKit.swift</a></p>
+    <p>Apple SwiftUI Documentation, <a href="https://developer.apple.com/xcode/swiftui/">https://developer.apple.com/xcode/swiftui/</a></p>
+    <p>RFC 8216 (HTTP Live Streaming) overview and related HLS specifications.</p>
   </div>
 </body>
 </html>
