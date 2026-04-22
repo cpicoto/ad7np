@@ -162,36 +162,16 @@
                 <div class="error" id="callsign-error">Please enter your callsign.</div>
 
                 <div class="platform-group">
-                    <p>Which platforms would you like to beta test? (select all that apply)</p>
+                    <p>Android App beta access</p>
                     <div class="platform-options">
-                        <label class="platform-option" id="opt-ios">
-                            <input type="checkbox" name="platform" value="ios">
-                            <span class="platform-icon">📱</span> iOS App
-                        </label>
-                        <label class="platform-option" id="opt-macos">
-                            <input type="checkbox" name="platform" value="macos">
-                            <span class="platform-icon">💻</span> macOS App
-                        </label>
-                        <label class="platform-option" id="opt-appletv">
-                            <input type="checkbox" name="platform" value="appletv">
-                            <span class="platform-icon">📺</span> Apple TV App
-                        </label>
                         <label class="platform-option" id="opt-android">
-                            <input type="checkbox" name="platform" value="android">
+                            <input type="checkbox" name="platform" value="android" checked disabled>
                             <span class="platform-icon">🤖</span> Android App
                         </label>
                     </div>
-                    <div class="error" id="platform-error" style="margin-top: 8px;">Please select at least one platform.</div>
                 </div>
 
-                <div id="appleid-group" style="display:none;">
-                    <label for="appleid">Apple ID (email)</label>
-                    <input type="email" id="appleid" name="Apple ID" placeholder="yourname@icloud.com">
-                    <p class="callsign-note">Required for iOS, macOS, and Apple TV beta via TestFlight.</p>
-                    <div class="error" id="appleid-error">Please enter a valid Apple ID email.</div>
-                </div>
-
-                <div id="gmail-group" style="display:none;">
+                <div id="gmail-group" style="display:block;">
                     <label for="gmail">Gmail Address</label>
                     <input type="email" id="gmail" name="Gmail" placeholder="yourname@gmail.com">
                     <p class="callsign-note">Required for Android beta access via Google Play.</p>
@@ -223,17 +203,27 @@
             });
         });
 
-        // Show/hide Apple ID and Gmail fields based on platform selection
+        // Show/hide account fields based on platform selection
         function updateAccountFields() {
             var applePlatforms = document.querySelectorAll('input[value="ios"]:checked, input[value="macos"]:checked, input[value="appletv"]:checked');
             var androidChecked = document.querySelector('input[value="android"]:checked');
 
-            document.getElementById('appleid-group').style.display = applePlatforms.length > 0 ? 'block' : 'none';
-            document.getElementById('gmail-group').style.display = androidChecked ? 'block' : 'none';
+            var appleGroup = document.getElementById('appleid-group');
+            if (appleGroup) {
+                appleGroup.style.display = applePlatforms.length > 0 ? 'block' : 'none';
+            }
+
+            var gmailGroup = document.getElementById('gmail-group');
+            if (gmailGroup) {
+                gmailGroup.style.display = androidChecked ? 'block' : 'none';
+            }
         }
         document.querySelectorAll('input[name="platform"]').forEach(function(cb) {
             cb.addEventListener('change', updateAccountFields);
         });
+
+        // Ensure correct initial visibility
+        updateAccountFields();
 
         // Combine platform selections into a hidden field for the email
         function setPlatformValue() {
