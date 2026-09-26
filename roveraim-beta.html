@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RoverAIM Beta Signup</title>
+    <meta name="description" content="Sign up for early access to RoverAIM — a new iOS and Android app by AD7NP.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #e0e0e0;
+            background: #0a0a0a;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: #1a1a2e;
+            border: 1px solid #2a2a4a;
+            border-radius: 16px;
+            padding: 48px 40px;
+            max-width: 520px;
+            width: 100%;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+        }
+        h1 {
+            font-size: 2em;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+        .app-badge {
+            display: inline-block;
+            background: #2a2a4a;
+            color: #8ec5fc;
+            font-size: 0.8em;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 20px;
+            margin-bottom: 16px;
+        }
+        .subtitle {
+            color: #a0a0b0;
+            font-size: 1.05em;
+            margin-bottom: 32px;
+        }
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #c0c0d0;
+            font-size: 0.95em;
+        }
+        input[type="text"],
+        input[type="email"] {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #3a3a5a;
+            border-radius: 8px;
+            font-size: 1em;
+            background: #12122a;
+            color: #e0e0e0;
+            margin-bottom: 20px;
+            transition: border-color 0.2s;
+        }
+        input[type="text"]:focus,
+        input[type="email"]:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(52,152,219,0.25);
+        }
+        input::placeholder { color: #555570; }
+        .field-note {
+            color: #6a6a8a;
+            font-size: 0.82em;
+            margin-top: -16px;
+            margin-bottom: 20px;
+        }
+        .platform-group {
+            margin-bottom: 24px;
+        }
+        .platform-group > label {
+            margin-bottom: 10px;
+        }
+        .platform-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .platform-option {
+            display: flex;
+            align-items: center;
+            padding: 14px 14px;
+            border: 2px solid #2a2a4a;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: border-color 0.2s, background 0.2s;
+            user-select: none;
+        }
+        .platform-option:hover {
+            border-color: #3498db;
+            background: rgba(52,152,219,0.08);
+        }
+        .platform-option input[type="checkbox"] {
+            margin-right: 10px;
+            width: 18px;
+            height: 18px;
+            accent-color: #3498db;
+        }
+        .platform-option.checked {
+            border-color: #3498db;
+            background: rgba(52,152,219,0.12);
+        }
+        .platform-icon {
+            font-size: 1.3em;
+            margin-right: 6px;
+        }
+        .account-group {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        .account-group.visible { display: block; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .error {
+            color: #e74c3c;
+            font-size: 0.85em;
+            margin-top: -16px;
+            margin-bottom: 16px;
+            display: none;
+        }
+        button[type="submit"] {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: #fff;
+            border: none;
+            padding: 14px 32px;
+            font-size: 1.05em;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 100%;
+            transition: opacity 0.2s;
+            margin-top: 8px;
+        }
+        button[type="submit"]:hover { opacity: 0.9; }
+        button[type="submit"]:disabled {
+            background: #3a3a5a;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 30px 0;
+        }
+        .success-message h2 {
+            color: #27ae60;
+            font-size: 1.6em;
+            margin-bottom: 12px;
+        }
+        .success-message p { color: #a0a0b0; }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 24px;
+            color: #6a6a8a;
+            font-size: 0.9em;
+            text-decoration: none;
+        }
+        .back-link:hover { color: #8ec5fc; }
+        @media (max-width: 500px) {
+            .platform-options { grid-template-columns: 1fr; }
+            .container { padding: 28px 20px; }
+            h1 { font-size: 1.6em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="signup-form-section">
+            <h1>RoverAIM</h1>
+            <span class="app-badge">BETA</span>
+            <p class="subtitle">
+                Sign up for early access to RoverAIM. Select your platform and provide your account so we can add you to the beta.
+            </p>
+
+            <form id="beta-form" action="https://formspree.io/f/mgopzvdr" method="POST" novalidate>
+                <input type="hidden" name="_subject" value="RoverAIM Beta Signup">
+                <input type="text" name="_gotcha" style="display:none">
+
+                <label for="name">Name</label>
+                <input type="text" id="name" name="Name" placeholder="Your name" required>
+                <div class="error" id="name-error">Please enter your name.</div>
+
+                <div class="platform-group">
+                    <label>Platform</label>
+                    <div class="platform-options">
+                        <label class="platform-option" id="opt-ios">
+                            <input type="checkbox" name="platform" value="iOS">
+                            <span class="platform-icon"></span> iOS
+                        </label>
+                        <label class="platform-option" id="opt-android">
+                            <input type="checkbox" name="platform" value="Android">
+                            <span class="platform-icon">🤖</span> Android
+                        </label>
+                    </div>
+                    <div class="error" id="platform-error" style="margin-top:8px;">Please select at least one platform.</div>
+                </div>
+
+                <div class="account-group" id="appleid-group">
+                    <label for="appleid">Apple ID (email)</label>
+                    <input type="email" id="appleid" name="Apple ID" placeholder="yourname@icloud.com">
+                    <p class="field-note">Required for iOS beta access via TestFlight.</p>
+                    <div class="error" id="appleid-error">Please enter a valid Apple ID email.</div>
+                </div>
+
+                <div class="account-group" id="gmail-group">
+                    <label for="gmail">Gmail Address</label>
+                    <input type="email" id="gmail" name="Gmail" placeholder="yourname@gmail.com">
+                    <p class="field-note">Required for Android beta access via Google Play.</p>
+                    <div class="error" id="gmail-error">Please enter a valid Gmail address.</div>
+                </div>
+
+                <button type="submit" id="submit-btn">Sign Up for Beta</button>
+            </form>
+        </div>
+
+        <div class="success-message" id="success-message">
+            <h2>You're in! 🎉</h2>
+            <p>Thanks for signing up for the RoverAIM beta. We'll send you an invite once your access is ready.</p>
+        </div>
+    </div>
+
+    <a class="back-link" href="index.html">&larr; ad7np.us</a>
+
+    <script>
+        document.querySelectorAll('.platform-option input[type="checkbox"]').forEach(function(cb) {
+            cb.addEventListener('change', function() {
+                this.closest('.platform-option').classList.toggle('checked', this.checked);
+                updateAccountFields();
+            });
+        });
+
+        function updateAccountFields() {
+            var iosChecked = document.querySelector('input[value="iOS"]:checked');
+            var androidChecked = document.querySelector('input[value="Android"]:checked');
+            document.getElementById('appleid-group').classList.toggle('visible', !!iosChecked);
+            document.getElementById('gmail-group').classList.toggle('visible', !!androidChecked);
+        }
+
+        function setPlatformValue() {
+            var checked = Array.from(document.querySelectorAll('input[name="platform"]:checked')).map(function(c) { return c.value; });
+            var hidden = document.getElementById('platforms-hidden');
+            if (!hidden) {
+                hidden = document.createElement('input');
+                hidden.type = 'hidden';
+                hidden.name = 'Platforms';
+                hidden.id = 'platforms-hidden';
+                document.getElementById('beta-form').appendChild(hidden);
+            }
+            hidden.value = checked.join(', ');
+        }
+
+        document.getElementById('beta-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            var valid = true;
+            var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            var name = document.getElementById('name').value.trim();
+            if (!name) {
+                document.getElementById('name-error').style.display = 'block';
+                valid = false;
+            } else {
+                document.getElementById('name-error').style.display = 'none';
+            }
+
+            var platforms = document.querySelectorAll('input[name="platform"]:checked');
+            if (platforms.length === 0) {
+                document.getElementById('platform-error').style.display = 'block';
+                valid = false;
+            } else {
+                document.getElementById('platform-error').style.display = 'none';
+            }
+
+            var iosChecked = document.querySelector('input[value="iOS"]:checked');
+            if (iosChecked) {
+                var appleId = document.getElementById('appleid').value.trim();
+                if (!appleId || !emailPattern.test(appleId)) {
+                    document.getElementById('appleid-error').style.display = 'block';
+                    valid = false;
+                } else {
+                    document.getElementById('appleid-error').style.display = 'none';
+                }
+            }
+
+            var androidChecked = document.querySelector('input[value="Android"]:checked');
+            if (androidChecked) {
+                var gmail = document.getElementById('gmail').value.trim();
+                if (!gmail || !emailPattern.test(gmail)) {
+                    document.getElementById('gmail-error').style.display = 'block';
+                    valid = false;
+                } else {
+                    document.getElementById('gmail-error').style.display = 'none';
+                }
+            }
+
+            if (!valid) return;
+
+            setPlatformValue();
+
+            var form = document.getElementById('beta-form');
+            var formData = new FormData(form);
+            formData.delete('platform');
+
+            var submitBtn = document.getElementById('submit-btn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
+
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            }).then(function(response) {
+                if (response.ok) {
+                    document.getElementById('signup-form-section').style.display = 'none';
+                    document.getElementById('success-message').style.display = 'block';
+                } else {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Sign Up for Beta';
+                    alert('Something went wrong. Please try again.');
+                }
+            }).catch(function() {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Sign Up for Beta';
+                alert('Network error. Please check your connection and try again.');
+            });
+        });
+    </script>
+</body>
+</html>
