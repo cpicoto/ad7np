@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#071222">
-  <meta name="description" content="Download WW7ATS for Windows, the amateur television viewer and transmitter for the Western Washington Amateur Television Society.">
+  <meta name="description" content="Download WW7ATS for Windows, Linux, macOS, iOS, iPadOS, Android, and tvOS.">
   <link rel="canonical" href="https://ad7np.us/ww7ats/">
-  <title>WW7ATS for Windows | AD7NP</title>
+  <title>WW7ATS Downloads | AD7NP</title>
   <style>
     :root {
       color-scheme: dark;
@@ -43,6 +43,7 @@
     }
     .brand { color: var(--text); text-decoration: none; font-weight: 800; letter-spacing: .06em; }
     .brand span { color: var(--cyan); }
+    .nav-links { display: flex; gap: 20px; }
     .nav-link { color: var(--muted); text-decoration: none; font-size: .94rem; }
     .hero {
       display: grid;
@@ -140,6 +141,16 @@
     .icon { display: grid; place-items: center; width: 45px; height: 45px; margin-bottom: 18px; border-radius: 13px; color: var(--cyan); background: rgba(73, 214, 255, .1); font-size: 1.35rem; }
     .card h3 { margin: 0 0 7px; }
     .card p { margin: 0; font-size: .95rem; }
+    .download-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .download-card { display: flex; flex-direction: column; min-height: 300px; }
+    .download-card .icon { font-size: 1.05rem; font-weight: 900; }
+    .platform-meta { margin: 0 0 16px; color: #8299ad; font-size: .86rem; }
+    .download-card p { margin: 0 0 18px; }
+    .download-card .button { justify-content: center; width: 100%; margin-top: auto; }
+    .download-card details { margin-top: 14px; color: #8ea4b7; font-size: .78rem; }
+    .download-card summary { cursor: pointer; }
+    .download-card code { display: block; margin-top: 7px; overflow-wrap: anywhere; color: #b7cede; }
+    .build-note { margin-top: 22px; }
     .steps { display: grid; grid-template-columns: 1.15fr .85fr; gap: 18px; align-items: stretch; }
     ol { margin: 20px 0 0; padding-left: 1.35rem; color: var(--muted); }
     li { padding: 5px 0 5px 7px; }
@@ -156,7 +167,8 @@
       .hero, .steps { grid-template-columns: 1fr; }
       .hero { padding-top: 48px; }
       .screen { max-width: 580px; width: 100%; justify-self: center; }
-      .grid { grid-template-columns: 1fr; }
+      .grid, .download-grid { grid-template-columns: 1fr; }
+      .nav-links .nav-link:first-child { display: none; }
     }
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .button { transition: none; } }
   </style>
@@ -165,7 +177,7 @@
   <header class="wrap">
     <nav aria-label="Primary navigation">
       <a class="brand" href="/"><span>AD7NP</span>.US</a>
-      <a class="nav-link" href="#install">Install &amp; requirements</a>
+      <span class="nav-links"><a class="nav-link" href="#downloads">All platforms</a><a class="nav-link" href="#install">Install &amp; requirements</a></span>
     </nav>
   </header>
 
@@ -177,7 +189,7 @@
         <p class="lead">Watch the WW7ATS live feed and transmit camera video to the Western Washington Amateur Television Society repeater from one focused Windows app.</p>
         <div class="actions">
           <a class="button primary" href="ww7ats-flutter-windows-x64-2.1.0-3841dbd-setup.exe" download>⬇ Download for Windows</a>
-          <a class="button secondary" href="#features">Explore features</a>
+          <a class="button secondary" href="#downloads">Other platforms</a>
         </div>
         <p class="meta">Windows 10/11 · x64 · Release 2.1.0 · 68.2 MB installer</p>
       </div>
@@ -203,6 +215,81 @@
       </div>
     </div>
 
+    <section id="downloads">
+      <div class="wrap">
+        <div class="section-title">
+          <h2>Downloads for every platform.</h2>
+          <p>The Windows x64 installer above is the recommended desktop build. These are exact additional assets from the WW7ATS v2.1.0 GitHub release, mirrored here so the downloads work without access to the private source repository.</p>
+        </div>
+        <div class="download-grid">
+          <article class="card download-card">
+            <div class="icon">WIN</div><h3>Windows x64 portable</h3>
+            <p class="platform-meta">Flutter 2.1.0 · ZIP · 89.2 MB</p>
+            <p>The same app as the installer, packaged for extraction and direct launch.</p>
+            <a class="button secondary" href="v2.1.0/ww7ats-flutter-windows-x64-2.1.0-3841dbd.zip" download>Download portable ZIP</a>
+            <details><summary>SHA-256</summary><code>d6fedafca6209b53abbf7861ac7cdbaba954c3baa471c6ff77ee4dde8c71d7c9</code></details>
+          </article>
+          <article class="card download-card">
+            <div class="icon">WIN</div><h3>Windows x64 native</h3>
+            <p class="platform-meta">Native app · unsigned ZIP · 146.2 MB</p>
+            <p>The Windows App SDK build for Intel and AMD 64-bit PCs.</p>
+            <a class="button secondary" href="v2.1.0/ww7ats-windows-x64-release-unsigned.zip" download>Download x64 ZIP</a>
+            <details><summary>SHA-256</summary><code>6473d8b1240f5a5fe70dc78ffb7e95bcc6f90a2270f35b4a00b6efffb139dc45</code></details>
+          </article>
+          <article class="card download-card">
+            <div class="icon">ARM</div><h3>Windows ARM64</h3>
+            <p class="platform-meta">Native app · unsigned ZIP · 131.7 MB</p>
+            <p>The Windows App SDK build for ARM64 Windows devices.</p>
+            <a class="button secondary" href="v2.1.0/ww7ats-windows-ARM64-release-unsigned.zip" download>Download ARM64 ZIP</a>
+            <details><summary>SHA-256</summary><code>16e2b099da7deabcff4318619b0c8fcf595fb70ba966f0041fec72fab222e7b1</code></details>
+          </article>
+          <article class="card download-card">
+            <div class="icon">DEB</div><h3>Linux x64</h3>
+            <p class="platform-meta">Debian/Ubuntu · amd64 · 97.8 KB</p>
+            <p>Qt 6 package for 64-bit Intel and AMD Linux systems.</p>
+            <a class="button secondary" href="v2.1.0/ww7ats-linux-amd64-release.deb" download>Download amd64 DEB</a>
+            <details><summary>SHA-256</summary><code>49e6302b20fdd773bbcd2c2889d6ae09e7a37713f21fbf77121a8b4d5cec57f0</code></details>
+          </article>
+          <article class="card download-card">
+            <div class="icon">DEB</div><h3>Linux ARM64</h3>
+            <p class="platform-meta">Debian/Ubuntu · arm64 · 95.0 KB</p>
+            <p>Qt 6 package for 64-bit ARM Linux systems.</p>
+            <a class="button secondary" href="v2.1.0/ww7ats-linux-arm64-release.deb" download>Download arm64 DEB</a>
+            <details><summary>SHA-256</summary><code>1a58c4daebe137f0509f5914e2552e706157b6a046c8b1c3446a94de2f8c494a</code></details>
+          </article>
+          <article class="card download-card">
+            <div class="icon">MAC</div><h3>macOS</h3>
+            <p class="platform-meta">Universal · unsigned Xcode archive · 11.4 MB</p>
+            <p>Contains Intel and Apple-silicon binaries. Developer signing or local approval is required.</p>
+            <a class="button secondary" href="v2.1.0/ww7ats-macOS-release-unsigned.zip" download>Download macOS archive</a>
+            <details><summary>SHA-256</summary><code>4d919ff544a92036d313f14b55de3007643223c776313c1c0eec06942b5bfa14</code></details>
+          </article>
+          <article class="card download-card">
+            <div class="icon">iOS</div><h3>iPhone &amp; iPad</h3>
+            <p class="platform-meta">ARM64 · unsigned Xcode archive · 40.6 MB</p>
+            <p>This is a developer archive, not an App Store or one-tap device installer.</p>
+            <a class="button secondary" href="v2.1.0/ww7ats-iOS-iPadOS-release-unsigned.zip" download>Download iOS archive</a>
+            <details><summary>SHA-256</summary><code>67970693e844276ba604806d954de91115ea505a457207c826ecbb0c6d73f593</code></details>
+          </article>
+          <article class="card download-card">
+            <div class="icon">AND</div><h3>Android</h3>
+            <p class="platform-meta">Unsigned APK · 3.4 MB</p>
+            <p>Developer/test artifact. Android normally requires the APK to be signed before installation.</p>
+            <a class="button secondary" href="v2.1.0/ww7ats-android-release-unsigned.apk" download>Download Android APK</a>
+            <details><summary>SHA-256</summary><code>ea32b8242ef8e77bc24c02c4088d615fb90a10b15ffef58ab6da41764aa978bc</code></details>
+          </article>
+          <article class="card download-card">
+            <div class="icon">TV</div><h3>Apple TV</h3>
+            <p class="platform-meta">ARM64 · unsigned Xcode archive · 4.6 MB</p>
+            <p>This is a tvOS developer archive and requires developer signing for installation.</p>
+            <a class="button secondary" href="v2.1.0/ww7ats-tvOS-release-unsigned.zip" download>Download tvOS archive</a>
+            <details><summary>SHA-256</summary><code>32010558bc91cc360e8d94f1b55c337e98a88562b27f1586d1dc223bff02b283</code></details>
+          </article>
+        </div>
+        <div class="warning build-note"><strong>Release metadata note:</strong> these files are attached to GitHub release v2.1.0, but several native packages retain older internal version metadata: Apple apps report 1.9 (build 5), and the Linux DEBs report 0.1.0. All packages in this section are unsigned.</div>
+      </div>
+    </section>
+
     <section id="features">
       <div class="wrap">
         <div class="section-title">
@@ -223,7 +310,7 @@
     <section id="install">
       <div class="wrap steps">
         <article class="note">
-          <h2>Install the preview</h2>
+          <h2>Install the Windows release</h2>
           <ol>
             <li>Download and run the WW7ATS per-user setup program; administrator rights are not required.</li>
             <li>If Microsoft Defender SmartScreen appears, select <strong>More info</strong>, verify the filename shown here, then choose <strong>Run anyway</strong>.</li>
