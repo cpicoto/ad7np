@@ -41,6 +41,28 @@
         .badge img {
             height: 54px;
         }
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+        .hero-button {
+            display: inline-block;
+            padding: 13px 24px;
+            border: 1px solid #6bbcff;
+            border-radius: 9px;
+            color: #07111e;
+            background: #8ec5fc;
+            text-decoration: none;
+            font-weight: 700;
+        }
+        .hero-button.secondary {
+            color: #e6f3ff;
+            background: rgba(15, 52, 96, .62);
+        }
+        .hero-button:hover { filter: brightness(1.08); }
         .features {
             max-width: 900px;
             margin: 0 auto;
@@ -121,7 +143,11 @@
     <section class="hero">
         <h1>WW7ATS</h1>
         <p class="subtitle">Amateur Television</p>
-        <p class="tagline">Stream live video to the WW7ATS ATV repeater and watch incoming feeds — from your iPhone, iPad, Mac, or Apple TV.</p>
+        <p class="tagline">Explore my amateur-radio projects: the cross-platform WW7ATS app for receiving and transmitting amateur television, and my EME moonbounce station.</p>
+        <div class="hero-actions">
+            <a class="hero-button" href="/ww7ats/">WW7ATS Downloads &amp; Guide</a>
+            <a class="hero-button secondary" href="/eme">EME / Moonbounce Station</a>
+        </div>
         <a class="badge" href="https://apps.apple.com/app/ww7ats-amateur-television/id6744059498">
             <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store">
         </a>

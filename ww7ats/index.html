@@ -53,6 +53,7 @@
       min-height: 610px;
       padding: 70px 0 80px;
     }
+    .hero > * { min-width: 0; }
     .eyebrow {
       display: inline-flex;
       align-items: center;
@@ -141,6 +142,11 @@
     .icon { display: grid; place-items: center; width: 45px; height: 45px; margin-bottom: 18px; border-radius: 13px; color: var(--cyan); background: rgba(73, 214, 255, .1); font-size: 1.35rem; }
     .card h3 { margin: 0 0 7px; }
     .card p { margin: 0; font-size: .95rem; }
+    .screenshot-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; align-items: start; }
+    .screenshot-card { margin: 0; padding: 16px; border: 1px solid var(--line); border-radius: 22px; background: var(--panel); box-shadow: var(--shadow); }
+    .screenshot-card img { display: block; width: 100%; max-height: 720px; object-fit: contain; border-radius: 14px; background: #070c12; }
+    .screenshot-card figcaption { padding: 14px 5px 2px; color: var(--muted); font-size: .93rem; }
+    .screenshot-card strong { display: block; margin-bottom: 3px; color: var(--text); }
     .download-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
     .download-card { display: flex; flex-direction: column; min-height: 300px; }
     .download-card .icon { font-size: 1.05rem; font-weight: 900; }
@@ -161,6 +167,12 @@
     .requirements li:last-child { border: 0; }
     .warning { margin-top: 18px; padding: 14px 16px; border-left: 3px solid var(--yellow); border-radius: 0 8px 8px 0; color: #e9d9ab; background: rgba(255,203,77,.07); font-size: .9rem; }
     .warning code { overflow-wrap: anywhere; color: #fff0bd; }
+    .guide-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; counter-reset: guide; }
+    .guide-step { position: relative; min-height: 190px; padding: 25px 25px 25px 76px; counter-increment: guide; }
+    .guide-step::before { content: counter(guide); position: absolute; top: 25px; left: 25px; display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; color: #03101a; background: var(--cyan); font-weight: 900; }
+    .guide-step h3 { margin: 2px 0 8px; }
+    .guide-step p { margin: 0; color: var(--muted); }
+    .control-list { margin-top: 18px; }
     footer { margin-top: 45px; padding: 30px 0 50px; border-top: 1px solid var(--line); color: #7f96aa; font-size: .9rem; }
     footer .wrap { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
     footer a { color: #9eb8ce; text-decoration: none; }
@@ -168,8 +180,13 @@
       .hero, .steps { grid-template-columns: 1fr; }
       .hero { padding-top: 48px; }
       .screen { max-width: 580px; width: 100%; justify-self: center; }
-      .grid, .download-grid { grid-template-columns: 1fr; }
+      .grid, .download-grid, .screenshot-grid, .guide-grid { grid-template-columns: 1fr; }
       .nav-links .nav-link:first-child { display: none; }
+    }
+    @media (max-width: 560px) {
+      .actions { flex-direction: column; }
+      .actions .button { justify-content: center; width: 100%; }
+      .nav-links .nav-link:last-child { display: none; }
     }
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .button { transition: none; } }
   </style>
@@ -178,7 +195,7 @@
   <header class="wrap">
     <nav aria-label="Primary navigation">
       <a class="brand" href="/"><span>AD7NP</span>.US</a>
-      <span class="nav-links"><a class="nav-link" href="#downloads">All platforms</a><a class="nav-link" href="#install">Install &amp; requirements</a></span>
+      <span class="nav-links"><a class="nav-link" href="#screenshots">Screenshots</a><a class="nav-link" href="#downloads">Downloads</a><a class="nav-link" href="#guide">How to use</a></span>
     </nav>
   </header>
 
@@ -187,7 +204,7 @@
       <div>
         <div class="eyebrow"><span class="dot"></span> Cross-platform release</div>
         <h1>WW7ATS<span>Amateur television, made simple.</span></h1>
-        <p class="lead">Watch the WW7ATS live feed and transmit camera video to the Western Washington Amateur Television Society repeater from one focused Windows app.</p>
+        <p class="lead">Watch the WW7ATS live feed and transmit camera video to the Western Washington Amateur Television Society repeater from one focused app across Windows, Linux, macOS, iPhone, iPad, and Android.</p>
         <div class="actions">
           <a class="button primary" href="/ww7ats/v2.2.21/ww7ats-flutter-windows-x64-setup.exe" download>⬇ Download for Windows</a>
           <a class="button secondary" href="#downloads">Other platforms</a>
@@ -215,6 +232,25 @@
         </div>
       </div>
     </div>
+
+    <section id="screenshots">
+      <div class="wrap">
+        <div class="section-title">
+          <h2>See the current app.</h2>
+          <p>Captured from the exact WW7ATS v2.2.21 (build 24) source in its offline UI-preview mode. No network stream, camera feed, callsign, or stream key is present in these images.</p>
+        </div>
+        <div class="screenshot-grid">
+          <figure class="screenshot-card">
+            <img src="/ww7ats/screenshots/ww7ats-v2.2.21-main.png" alt="WW7ATS version 2.2.21 main screen showing the repeater downlink, camera preview, media controls, push-to-talk button, status, and version" width="828" height="1800">
+            <figcaption><strong>Main station screen</strong>Monitor the repeater downlink, preview your camera, choose program material, and control transmission from one screen.</figcaption>
+          </figure>
+          <figure class="screenshot-card">
+            <img src="/ww7ats/screenshots/ww7ats-v2.2.21-settings.png" alt="WW7ATS version 2.2.21 station settings for callsign, secure stream key, transmit quality, automatic Morse identification, and callsign overlay" width="828" height="1800" loading="lazy">
+            <figcaption><strong>Station settings</strong>Configure your licensed callsign, secure stream key, transmit quality, CW identification, and callsign overlay.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
 
     <section id="downloads">
       <div class="wrap">
@@ -294,7 +330,7 @@
       <div class="wrap">
         <div class="section-title">
           <h2>Receive, transmit, identify.</h2>
-          <p>Built for licensed operators who want an uncomplicated path from a Windows camera to the club’s ATV system.</p>
+          <p>Built for licensed operators who want an uncomplicated path from a camera to the club’s ATV system.</p>
         </div>
         <div class="grid">
           <article class="card"><div class="icon">▶</div><h3>Live playback</h3><p>Monitor the incoming WW7ATS HLS feed in the same app used for transmission.</p></article>
@@ -303,6 +339,51 @@
           <article class="card"><div class="icon">▧</div><h3>Slideshow + PiP</h3><p>Share photos while keeping the camera visible in picture-in-picture.</p></article>
           <article class="card"><div class="icon">−·−·</div><h3>CW identification</h3><p>Generate the operator’s callsign identification as part of the outgoing program.</p></article>
           <article class="card"><div class="icon">⚙</div><h3>Quality presets</h3><p>Choose 480p, 720p, or 1080p video to fit the available uplink.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="guide">
+      <div class="wrap">
+        <div class="section-title">
+          <h2>How to use WW7ATS.</h2>
+          <p>The app is designed around a short station workflow: install, configure once, prepare your program, then transmit with a clear on-air state.</p>
+        </div>
+        <div class="guide-grid">
+          <article class="card guide-step">
+            <h3>Install the right build</h3>
+            <p>Use the Windows installer for a standard Windows 10/11 x64 PC, the ARM64 installer for Windows on Arm, or the official TestFlight and Google Play links for Apple and Android devices.</p>
+          </article>
+          <article class="card guide-step">
+            <h3>Configure your station</h3>
+            <p>Open the gear button, enter your licensed callsign and the private stream key issued by WW7ATS, then choose a transmit-quality preset. The key is kept in the operating system's secure storage.</p>
+          </article>
+          <article class="card guide-step">
+            <h3>Prepare video and audio</h3>
+            <p>Enable the camera and confirm the local preview. Desktop builds let you select capture devices; use the repeater downlink to monitor activity before transmitting.</p>
+          </article>
+          <article class="card guide-step">
+            <h3>Choose your program</h3>
+            <p>Send live camera video or use the media controls for a photo slideshow, a video clip, a shared application window, or a temporary text overlay where supported.</p>
+          </article>
+          <article class="card guide-step">
+            <h3>Transmit with PTT</h3>
+            <p>Press PTT once to connect and go on air. Watch the status indicator for the live state. Press PTT again to end the transmission; automatic identification runs before sign-off when enabled.</p>
+          </article>
+          <article class="card guide-step">
+            <h3>Identify and protect access</h3>
+            <p>Keep automatic 700 Hz Morse identification enabled unless your operating plan provides another compliant ID. Never publish or send your WW7ATS stream key to anyone else.</p>
+          </article>
+        </div>
+        <div class="note control-list">
+          <h3>Controls at a glance</h3>
+          <ul class="requirements">
+            <li><strong>Speaker:</strong> mute or restore the repeater downlink audio.</li>
+            <li><strong>Camera:</strong> enable the live camera and use picture-in-picture during slides.</li>
+            <li><strong>Photos / video / window share:</strong> select alternate program material; availability depends on platform.</li>
+            <li><strong>Gear:</strong> callsign, secure stream key, quality, CW ID, and callsign-overlay settings.</li>
+            <li><strong>PTT:</strong> start or stop the outgoing ATV transmission.</li>
+          </ul>
         </div>
       </div>
     </section>
