@@ -3,212 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WW7ATS - Amateur Television App</title>
-    <meta name="description" content="Stream live video to the WW7ATS ATV repeater and watch incoming feeds. Built for licensed ham radio operators.">
+    <title>AD7NP — Carlos Picoto</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
             color: #e0e0e0;
-            background: #0a0a0a;
-        }
-        .hero {
-            text-align: center;
-            padding: 80px 20px 60px;
-            background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 50%, #16213e 100%);
-        }
-        .hero h1 {
-            font-size: 2.8em;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 8px;
-        }
-        .hero .subtitle {
-            font-size: 1.4em;
-            color: #8ec5fc;
-            margin-bottom: 30px;
-        }
-        .hero .tagline {
-            font-size: 1.1em;
-            color: #b0b0b0;
-            max-width: 600px;
-            margin: 0 auto 40px;
-        }
-        .badge {
-            display: inline-block;
-        }
-        .badge img {
-            height: 54px;
-        }
-        .hero-actions {
+            min-height: 100vh;
             display: flex;
-            flex-wrap: wrap;
+            align-items: center;
             justify-content: center;
-            gap: 14px;
-            margin-bottom: 24px;
         }
-        .hero-button {
-            display: inline-block;
-            padding: 13px 24px;
-            border: 1px solid #6bbcff;
-            border-radius: 9px;
-            color: #07111e;
-            background: #8ec5fc;
-            text-decoration: none;
+        .container { width: 100%; max-width: 32rem; text-align: center; padding: 2rem; }
+        h1 {
+            font-size: 3.5rem;
             font-weight: 700;
+            letter-spacing: 0.15em;
+            margin-bottom: 0.3rem;
+            color: #e94560;
         }
-        .hero-button.secondary {
-            color: #e6f3ff;
-            background: rgba(15, 52, 96, .62);
+        .name {
+            font-size: 1.3rem;
+            color: #8ab4c7;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.3rem;
         }
-        .hero-button:hover { filter: brightness(1.08); }
-        .features {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 60px 20px;
+        .class {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 0.8rem;
         }
-        .features h2 {
-            text-align: center;
-            font-size: 2em;
-            color: #fff;
-            margin-bottom: 40px;
+        .intro {
+            max-width: 28rem;
+            margin: 0 auto 1.4rem;
+            color: #aab8ca;
+            font-size: 0.95rem;
         }
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
-        .feature-card {
-            background: #1a1a2e;
-            border: 1px solid #2a2a4a;
-            border-radius: 12px;
-            padding: 28px;
-        }
-        .feature-card .icon {
-            font-size: 2em;
-            margin-bottom: 12px;
-        }
-        .feature-card h3 {
-            color: #8ec5fc;
-            font-size: 1.2em;
-            margin-bottom: 8px;
-        }
-        .feature-card p {
-            color: #a0a0a0;
-            font-size: 0.95em;
-        }
-        .callout {
-            text-align: center;
-            padding: 60px 20px;
-            background: #111;
-        }
-        .callout h2 {
-            font-size: 1.8em;
-            color: #fff;
-            margin-bottom: 12px;
-        }
-        .callout p {
-            color: #888;
-            max-width: 500px;
-            margin: 0 auto 30px;
-        }
-        .callout .cta {
+        .qrz {
             display: inline-block;
-            background: #3498db;
-            color: #fff;
+            color: #8ab4c7;
             text-decoration: none;
-            padding: 14px 32px;
-            border-radius: 8px;
-            font-size: 1.1em;
+            font-size: 0.9rem;
+            border: 1px solid #2a3a5e;
+            padding: 0.5rem 1.2rem;
+            border-radius: 6px;
+            transition: all 0.2s;
+            margin-bottom: 1rem;
+        }
+        .qrz:hover {
+            border-color: #8ab4c7;
+            background: rgba(138, 180, 199, 0.1);
+        }
+        .beta-link {
+            display: inline-block;
+            color: #e0e0e0;
+            text-decoration: none;
+            font-size: 0.9rem;
             font-weight: 600;
+            background: rgba(52, 152, 219, 0.15);
+            border: 1px solid #3498db;
+            padding: 0.5rem 1.5rem;
+            border-radius: 6px;
+            transition: all 0.2s;
+            margin-top: 0.5rem;
         }
-        .callout .cta:hover {
-            background: #2980b9;
+        .beta-link:hover {
+            background: rgba(52, 152, 219, 0.3);
         }
-        footer {
-            text-align: center;
-            padding: 30px 20px;
-            color: #555;
-            font-size: 0.9em;
-            border-top: 1px solid #222;
+        .project-link {
+            min-width: 13rem;
+            background: rgba(73, 214, 255, 0.13);
+            border-color: #49d6ff;
         }
-        footer a {
-            color: #3498db;
-            text-decoration: none;
+        .links {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.6rem;
         }
     </style>
 </head>
 <body>
-    <section class="hero">
-        <h1>WW7ATS</h1>
-        <p class="subtitle">Amateur Television</p>
-        <p class="tagline">Explore my amateur-radio projects: the cross-platform WW7ATS app for receiving and transmitting amateur television, and my EME moonbounce station.</p>
-        <div class="hero-actions">
-            <a class="hero-button" href="/ww7ats/">WW7ATS Downloads &amp; Guide</a>
-            <a class="hero-button secondary" href="/eme">EME / Moonbounce Station</a>
+    <div class="container">
+        <h1>AD7NP</h1>
+        <p class="name">Carlos Picoto</p>
+        <p class="class">Amateur Extra</p>
+        <p class="intro">Explore my amateur-radio software and station projects.</p>
+        <div class="links">
+            <a class="beta-link project-link" href="/ww7ats/">WW7ATS App &amp; Guide</a>
+            <a class="beta-link project-link" href="/eme">EME / Moonbounce Station</a>
+            <a class="qrz" href="https://www.qrz.com/db/AD7NP" target="_blank">QRZ.com</a>
+            <a class="beta-link" href="RoverAIM">RoverAIM</a>
+            <a class="beta-link" href="AirWSJT-X">AirWSJT-X</a>
+            <a class="beta-link" href="Support/RoverAIM" style="border-color: #e94560; background: rgba(233, 69, 96, 0.15);">App Support</a>
         </div>
-        <a class="badge" href="https://apps.apple.com/app/ww7ats-amateur-television/id6744059498">
-            <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store">
-        </a>
-    </section>
-
-    <section class="features">
-        <h2>Everything You Need for ATV</h2>
-        <div class="feature-grid">
-            <div class="feature-card">
-                <div class="icon">📡</div>
-                <h3>RTMP Streaming</h3>
-                <p>Broadcast your camera feed to the WW7ATS repeater with adjustable quality — 360p, 480p, or 720p.</p>
-            </div>
-            <div class="feature-card">
-                <div class="icon">📺</div>
-                <h3>Live Playback</h3>
-                <p>Watch incoming ATV feeds with the built-in low-latency HLS player optimized for live video.</p>
-            </div>
-            <div class="feature-card">
-                <div class="icon">🖼️</div>
-                <h3>Slideshow + PiP</h3>
-                <p>Show photos as an auto-cycling slideshow with your live camera composited as a picture-in-picture window.</p>
-            </div>
-            <div class="feature-card">
-                <div class="icon">🎙️</div>
-                <h3>Push-to-Talk</h3>
-                <p>On-screen PTT button for transmitter control, integrated with the WW7ATS repeater system.</p>
-            </div>
-            <div class="feature-card">
-                <div class="icon">📟</div>
-                <h3>Morse Code CW ID</h3>
-                <p>Automatic station identification via Morse code, compliant with FCC Part 97 requirements.</p>
-            </div>
-            <div class="feature-card">
-                <div class="icon">📺</div>
-                <h3>Apple TV Support</h3>
-                <p>Stream from your big screen using iPhone Continuity Camera — your iPhone provides the video and audio wirelessly to Apple TV.</p>
-            </div>
-            <div class="feature-card">
-                <div class="icon">⚙️</div>
-                <h3>Simple Setup</h3>
-                <p>Just enter your callsign and stream key — the app handles the rest with pre-configured server connections.</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="callout">
-        <h2>Built for Ham Radio Operators</h2>
-        <p>Designed exclusively for the WW7ATS amateur television repeater system. A valid amateur radio license is required to transmit.</p>
-        <p style="color: #8ec5fc; font-size: 1.2em; margin-bottom: 0;">73 de AD7NP</p>
-    </section>
-
-    <section class="callout" style="background: linear-gradient(135deg, #16213e 0%, #1a1a2e 100%); border-top: 1px solid #2a2a4a;">
-        <h2>RoverAIM</h2>
-        <p>A new iOS &amp; Android app by AD7NP — coming soon. Sign up for early beta access.</p>
-        <a class="cta" href="roveraim-beta.html">Join the Beta</a>
-    </section>
-
-    <footer>
-        <p>&copy; 2026 Carlos Picoto (AD7NP)</p>
-        <p><a href="support.html">Support</a> &middot; <a href="privacy-policy.html">Privacy Policy</a> &middot; <a href="privacy-policy-tvos.html">Apple TV Privacy Policy</a></p>
-    </footer>
+    </div>
 </body>
 </html>
